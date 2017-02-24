@@ -1,0 +1,5248 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>WiredComponentProvider.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2005 Red Hat, Inc. and/or its affiliates.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.kie.scanner.embedder;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.DefaultMaven;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.Maven;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.artifact.factory.ArtifactFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.artifact.factory.DefaultArtifactFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.artifact.handler.ArtifactHandler;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.artifact.handler.DefaultArtifactHandler;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.artifact.handler.manager.DefaultArtifactHandlerManager;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.artifact.repository.layout.ArtifactRepositoryLayout;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.artifact.repository.layout.FlatRepositoryLayout;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.bridge.MavenRepositorySystem;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.eventspy.EventSpy;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.eventspy.internal.EventSpyDispatcher;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.execution.DefaultMavenExecutionRequestPopulator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_34'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.execution.MavenExecutionRequest;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.execution.MavenExecutionRequestPopulator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.building.DefaultModelBuilder;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.building.DefaultModelProcessor;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_38'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.building.ModelBuilder;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.building.ModelProcessor;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.composition.DefaultDependencyManagementImporter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.composition.DependencyManagementImporter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.inheritance.DefaultInheritanceAssembler;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.inheritance.InheritanceAssembler;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.interpolation.ModelInterpolator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_45'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.interpolation.StringSearchModelInterpolator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_46'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.io.DefaultModelReader;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_47'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.io.ModelReader;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_48'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.management.DefaultDependencyManagementInjector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.management.DefaultPluginManagementInjector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_50'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.management.DependencyManagementInjector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.management.PluginManagementInjector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.normalization.DefaultModelNormalizer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_53'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.normalization.ModelNormalizer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.path.DefaultModelPathTranslator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_55'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.path.DefaultModelUrlNormalizer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_56'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.path.DefaultPathTranslator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_57'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.path.DefaultUrlNormalizer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_58'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.path.ModelPathTranslator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.path.ModelUrlNormalizer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_60'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.path.PathTranslator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_61'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.path.UrlNormalizer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_62'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.profile.DefaultProfileInjector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.profile.DefaultProfileSelector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.profile.ProfileInjector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_65'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.profile.ProfileSelector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_66'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.superpom.DefaultSuperPomProvider;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_67'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.superpom.SuperPomProvider;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_68'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.validation.DefaultModelValidator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_69'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.model.validation.ModelValidator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_70'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.plugin.LegacySupport;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.plugin.internal.DefaultLegacySupport;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_72'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.project.DefaultProjectBuilder;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.project.DefaultProjectBuildingHelper;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_74'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.project.DefaultProjectDependenciesResolver;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_75'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.project.ProjectBuilder;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_76'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.project.ProjectBuildingHelper;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_77'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.project.ProjectDependenciesResolver;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_78'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.project.RepositorySessionDecorator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_79'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.repository.DefaultMirrorSelector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_80'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.repository.MirrorSelector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_81'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.repository.RepositorySystem;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_82'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.repository.internal.MavenRepositorySystemUtils;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_83'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.repository.legacy.LegacyRepositorySystem;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_84'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.repository.legacy.repository.ArtifactRepositoryFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_85'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.repository.legacy.repository.DefaultArtifactRepositoryFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_86'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.settings.building.DefaultSettingsBuilderFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_87'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.settings.building.SettingsBuilder;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_88'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.settings.crypto.DefaultSettingsDecrypter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_89'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.settings.crypto.SettingsDecrypter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_90'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.codehaus.plexus.PlexusContainer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_91'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.codehaus.plexus.component.repository.exception.ComponentLookupException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_92'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.codehaus.plexus.logging.Logger;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_93'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.codehaus.plexus.logging.console.ConsoleLogger;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_94'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.RepositorySystemSession;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_95'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.connector.basic.BasicRepositoryConnectorFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_96'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.impl.ArtifactResolver;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_97'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.impl.DefaultServiceLocator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_98'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.impl.RemoteRepositoryManager;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_99'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.internal.impl.DefaultArtifactResolver;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_100'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.internal.impl.DefaultRemoteRepositoryManager;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_101'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.internal.impl.DefaultRepositorySystem;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_102'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.internal.impl.DefaultTransporterProvider;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_103'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.spi.connector.RepositoryConnectorFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_104'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.spi.connector.transport.TransporterFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_105'/>
+105
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_105'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.spi.connector.transport.TransporterProvider;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_106'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.transport.file.FileTransporterFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_107'/>
+107
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_107'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.transport.http.HttpTransporterFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_108'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.transport.wagon.WagonTransporterFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_109'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.sonatype.plexus.components.cipher.DefaultPlexusCipher;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_110'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.sonatype.plexus.components.cipher.PlexusCipher;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_111'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.sonatype.plexus.components.sec.dispatcher.DefaultSecDispatcher;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_112'/>
+112
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_112'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.sonatype.plexus.components.sec.dispatcher.SecDispatcher;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_113'/>
+113
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_113'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_114'/>
+114
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_114'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.lang.reflect.Field;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_115'/>
+115
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_115'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.ArrayList;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_116'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.HashMap;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_117'/>
+117
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_117'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_118'/>
+118
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_118'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Map;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_119'/>
+119
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_119'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_120'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class WiredComponentProvider implements ComponentProvider {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_121'/>
+121
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_121'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_122'/>
+122
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_122'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private final DefaultServiceLocator locator = MavenRepositorySystemUtils.newServiceLocator();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_123'/>
+123
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_123'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_124'/>
+124
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_124'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public WiredComponentProvider() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_125'/>
+125
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_125'>1</a>
+<span>
+1. <init> : removed call to org/kie/scanner/embedder/WiredComponentProvider::initServiceLocator &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        initServiceLocator();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_126'/>
+126
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_126'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_127'/>
+127
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_127'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_128'/>
+128
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_128'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void initServiceLocator() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_129'/>
+129
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_129'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( TransporterFactory.class, FileTransporterFactory.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_130'/>
+130
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_130'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( TransporterFactory.class, HttpTransporterFactory.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_131'/>
+131
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_131'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( TransporterFactory.class, WagonTransporterFactory.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_132'/>
+132
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_132'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_133'/>
+133
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_133'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.setServices( SettingsBuilder.class, new DefaultSettingsBuilderFactory().newInstance() );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_134'/>
+134
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_134'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( RepositorySystem.class, LegacyRepositorySystem.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_135'/>
+135
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_135'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( MavenRepositorySystem.class, MavenRepositorySystem.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_136'/>
+136
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_136'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_137'/>
+137
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_137'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( org.eclipse.aether.RepositorySystem.class, DefaultRepositorySystem.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_138'/>
+138
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_138'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( PlexusCipher.class, DefaultPlexusCipher.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_139'/>
+139
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_139'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( SecDispatcher.class, DefaultSecDispatcher.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_140'/>
+140
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_140'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( SettingsDecrypter.class, DefaultSettingsDecrypter.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_141'/>
+141
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_141'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( MavenExecutionRequestPopulator.class, DefaultMavenExecutionRequestPopulator.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_142'/>
+142
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_142'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ArtifactRepositoryFactory.class, DefaultArtifactRepositoryFactory.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_143'/>
+143
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_143'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( MirrorSelector.class, DefaultMirrorSelector.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_144'/>
+144
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_144'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( Logger.class, ConsoleLogger.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_145'/>
+145
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_145'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( Maven.class, DefaultMaven.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_146'/>
+146
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_146'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( LegacySupport.class, DefaultLegacySupport.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_147'/>
+147
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_147'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ProjectBuilder.class, DefaultProjectBuilder.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_148'/>
+148
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_148'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ProjectBuildingHelper.class, DefaultProjectBuildingHelper.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_149'/>
+149
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_149'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ProfileSelector.class, DefaultProfileSelector.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_150'/>
+150
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_150'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ModelProcessor.class, DefaultModelProcessor.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_151'/>
+151
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_151'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ModelReader.class, DefaultModelReader.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_152'/>
+152
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_152'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ModelValidator.class, DefaultModelValidator.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_153'/>
+153
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_153'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( SuperPomProvider.class, DefaultSuperPomProvider.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_154'/>
+154
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_154'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ModelNormalizer.class, DefaultModelNormalizer.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_155'/>
+155
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_155'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ProfileInjector.class, DefaultProfileInjector.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_156'/>
+156
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_156'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( RemoteRepositoryManager.class, DefaultRemoteRepositoryManager.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_157'/>
+157
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_157'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( InheritanceAssembler.class, DefaultInheritanceAssembler.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_158'/>
+158
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_158'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ModelInterpolator.class, StringSearchModelInterpolator.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_159'/>
+159
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_159'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ModelUrlNormalizer.class, DefaultModelUrlNormalizer.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_160'/>
+160
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_160'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( UrlNormalizer.class, DefaultUrlNormalizer.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_161'/>
+161
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_161'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ModelPathTranslator.class, DefaultModelPathTranslator.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_162'/>
+162
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_162'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( PluginManagementInjector.class, DefaultPluginManagementInjector.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_163'/>
+163
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_163'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( DependencyManagementInjector.class, DefaultDependencyManagementInjector.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_164'/>
+164
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_164'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( DependencyManagementImporter.class, DefaultDependencyManagementImporter.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_165'/>
+165
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_165'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ArtifactFactory.class, DefaultArtifactFactory.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_166'/>
+166
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_166'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ArtifactHandlerManager.class, DefaultArtifactHandlerManager.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_167'/>
+167
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_167'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ProjectDependenciesResolver.class, DefaultProjectDependenciesResolver.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_168'/>
+168
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_168'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( PathTranslator.class, DefaultPathTranslator.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_169'/>
+169
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_169'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( TransporterProvider.class, DefaultTransporterProvider.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_170'/>
+170
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_170'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( RepositoryConnectorFactory.class, BasicRepositoryConnectorFactory.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_171'/>
+171
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_171'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        locator.addService( ModelBuilder.class, DefaultModelBuilder.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_172'/>
+172
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_172'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_173'/>
+173
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_173'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( MavenExecutionRequestPopulator.class, RepositorySystem.class, &#34;repositorySystem&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_174'/>
+174
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_174'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_175'/>
+175
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_175'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Map&#60;String, ArtifactRepositoryLayout&#62; layouts = new HashMap&#60;String, ArtifactRepositoryLayout&#62;(  );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_176'/>
+176
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_176'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        layouts.put(&#34;default&#34;, new DefaultRepositoryLayout());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_177'/>
+177
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_177'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        layouts.put(&#34;flat&#34;, new FlatRepositoryLayout());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_178'/>
+178
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_178'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( RepositorySystem.class, layouts, &#34;layouts&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_179'/>
+179
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_179'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( RepositorySystem.class, ArtifactRepositoryFactory.class, &#34;artifactRepositoryFactory&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_180'/>
+180
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_180'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( RepositorySystem.class, MirrorSelector.class, &#34;mirrorSelector&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_181'/>
+181
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_181'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( RepositorySystem.class, ArtifactFactory.class, &#34;artifactFactory&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_182'/>
+182
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_182'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_183'/>
+183
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_183'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( ArtifactRepositoryFactory.class, layouts, &#34;repositoryLayouts&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_184'/>
+184
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_184'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ArtifactHandlerManager.class, buildArtifactHandlers(), &#34;artifactHandlers&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_185'/>
+185
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_185'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( ArtifactFactory.class, ArtifactHandlerManager.class, &#34;artifactHandlerManager&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_186'/>
+186
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_186'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_187'/>
+187
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_187'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( SecDispatcher.class, PlexusCipher.class, &#34;_cipher&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_188'/>
+188
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_188'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( SettingsDecrypter.class, SecDispatcher.class, &#34;securityDispatcher&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_189'/>
+189
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_189'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_190'/>
+190
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_190'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        EventSpyDispatcher eventSpyDispatcher = new EventSpyDispatcher();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_191'/>
+191
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_191'>1</a>
+<span>
+1. initServiceLocator : removed call to org/apache/maven/eventspy/internal/EventSpyDispatcher::setEventSpies &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        eventSpyDispatcher.setEventSpies( new ArrayList&#60;EventSpy&#62;() );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_192'/>
+192
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_192'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( Maven.class, eventSpyDispatcher, &#34;eventSpyDispatcher&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_193'/>
+193
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_193'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( Maven.class, org.eclipse.aether.RepositorySystem.class, &#34;repoSystem&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_194'/>
+194
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_194'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( Maven.class, SettingsDecrypter.class, &#34;settingsDecrypter&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_195'/>
+195
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_195'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( Maven.class, Logger.class, &#34;logger&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_196'/>
+196
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_196'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_197'/>
+197
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_197'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( ProjectBuilder.class, ProjectBuildingHelper.class, &#34;projectBuildingHelper&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_198'/>
+198
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_198'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ProjectBuildingHelper.class, RepositorySystem.class, &#34;repositorySystem&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_199'/>
+199
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_199'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_200'/>
+200
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_200'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( MavenRepositorySystem.class, Logger.class, &#34;logger&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_201'/>
+201
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_201'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( MavenRepositorySystem.class, ArtifactHandlerManager.class, &#34;artifactHandlerManager&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_202'/>
+202
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_202'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( MavenRepositorySystem.class, ArtifactResolver.class, &#34;artifactResolver&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_203'/>
+203
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_203'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( MavenRepositorySystem.class, layouts, &#34;layouts&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_204'/>
+204
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_204'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( MavenRepositorySystem.class, PlexusContainer.class, &#34;plexus&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_205'/>
+205
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_205'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( MavenRepositorySystem.class, SettingsDecrypter.class, &#34;settingsDecrypter&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_206'/>
+206
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_206'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_207'/>
+207
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_207'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ProjectBuilder.class, MavenRepositorySystem.class, &#34;repositorySystem&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_208'/>
+208
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_208'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( ProjectBuilder.class, ProjectBuildingHelper.class, &#34;projectBuildingHelper&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_209'/>
+209
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_209'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ProjectBuilder.class, ModelBuilder.class, &#34;modelBuilder&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_210'/>
+210
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_210'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( ProjectBuilder.class, org.eclipse.aether.RepositorySystem.class, &#34;repoSystem&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_211'/>
+211
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_211'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ProjectBuilder.class, RemoteRepositoryManager.class, &#34;repositoryManager&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_212'/>
+212
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_212'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ProjectBuilder.class, ProjectDependenciesResolver.class, &#34;dependencyResolver&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_213'/>
+213
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_213'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_214'/>
+214
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_214'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ProjectDependenciesResolver.class, Logger.class, &#34;logger&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_215'/>
+215
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_215'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ProjectDependenciesResolver.class, org.eclipse.aether.RepositorySystem.class, &#34;repoSystem&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_216'/>
+216
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_216'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        List&#60;RepositorySessionDecorator&#62; decorators = new ArrayList&#60;RepositorySessionDecorator&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_217'/>
+217
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_217'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ProjectDependenciesResolver.class, decorators, &#34;decorators&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_218'/>
+218
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_218'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_219'/>
+219
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_219'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( SuperPomProvider.class, ModelProcessor.class, &#34;modelProcessor&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_220'/>
+220
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_220'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelUrlNormalizer.class, UrlNormalizer.class, &#34;urlNormalizer&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_221'/>
+221
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_221'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelProcessor.class, ModelReader.class, &#34;reader&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_222'/>
+222
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_222'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( ModelInterpolator.class, UrlNormalizer.class, &#34;urlNormalizer&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_223'/>
+223
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_223'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( ModelInterpolator.class, PathTranslator.class, &#34;pathTranslator&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_224'/>
+224
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_224'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( ModelPathTranslator.class, PathTranslator.class, &#34;pathTranslator&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_225'/>
+225
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_225'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_226'/>
+226
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_226'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, ProfileSelector.class, &#34;profileSelector&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_227'/>
+227
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_227'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, ModelProcessor.class, &#34;modelProcessor&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_228'/>
+228
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_228'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, ModelValidator.class, &#34;modelValidator&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_229'/>
+229
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_229'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, SuperPomProvider.class, &#34;superPomProvider&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_230'/>
+230
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_230'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, ModelNormalizer.class, &#34;modelNormalizer&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_231'/>
+231
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_231'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( ModelBuilder.class, ProfileInjector.class, &#34;profileInjector&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_232'/>
+232
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_232'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, InheritanceAssembler.class, &#34;inheritanceAssembler&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_233'/>
+233
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_233'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, ModelInterpolator.class, &#34;modelInterpolator&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_234'/>
+234
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_234'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, ModelUrlNormalizer.class, &#34;modelUrlNormalizer&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_235'/>
+235
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_235'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, ModelPathTranslator.class, &#34;modelPathTranslator&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_236'/>
+236
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_236'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, PluginManagementInjector.class, &#34;pluginManagementInjector&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_237'/>
+237
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_237'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( ModelBuilder.class, DependencyManagementInjector.class, &#34;dependencyManagementInjector&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_238'/>
+238
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_238'>1</a>
+<span>
+1. initServiceLocator : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        inject( ModelBuilder.class, DependencyManagementImporter.class, &#34;dependencyManagementImporter&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_239'/>
+239
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_239'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_240'/>
+240
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_240'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_241'/>
+241
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_241'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private Map&#60;String, ArtifactHandler&#62; buildArtifactHandlers() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_242'/>
+242
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_242'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Map&#60;String, ArtifactHandler&#62; handlerMap = new HashMap&#60;String, ArtifactHandler&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_243'/>
+243
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_243'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        handlerMap.put(&#34;jar&#34;, buildArtifactHandler( &#34;jar&#34; ));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_244'/>
+244
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_244'>1</a>
+<span>
+1. buildArtifactHandlers : mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::buildArtifactHandlers to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return handlerMap;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_245'/>
+245
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_245'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_246'/>
+246
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_246'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_247'/>
+247
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_247'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private ArtifactHandler buildArtifactHandler(String type) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_248'/>
+248
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_248'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        DefaultArtifactHandler artifactHandler = new DefaultArtifactHandler( type );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_249'/>
+249
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_249'>1</a>
+<span>
+1. buildArtifactHandler : removed call to org/apache/maven/artifact/handler/DefaultArtifactHandler::setLanguage &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        artifactHandler.setLanguage( &#34;java&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_250'/>
+250
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_250'>1</a>
+<span>
+1. buildArtifactHandler : removed call to org/apache/maven/artifact/handler/DefaultArtifactHandler::setAddedToClasspath &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        artifactHandler.setAddedToClasspath( true );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_251'/>
+251
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_251'>1</a>
+<span>
+1. buildArtifactHandler : mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::buildArtifactHandler to ( if (x != null) null else throw new RuntimeException ) &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return artifactHandler;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_252'/>
+252
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_252'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_253'/>
+253
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_253'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_254'/>
+254
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_254'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void inject(Class&#60;?&#62; bean, Class&#60;?&#62; requirement, String fieldName) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_255'/>
+255
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_255'>1</a>
+<span>
+1. inject : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject(bean, locator.getService( requirement ), fieldName);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_256'/>
+256
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_256'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_257'/>
+257
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_257'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_258'/>
+258
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_258'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void inject(Class&#60;?&#62; bean, Object requirement, String fieldName) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_259'/>
+259
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_259'>1</a>
+<span>
+1. inject : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( locator.getService( bean ), requirement, fieldName );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_260'/>
+260
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_260'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_261'/>
+261
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_261'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_262'/>
+262
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_262'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void inject( Object instance, Class&#60;?&#62; requirement, String fieldName ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_263'/>
+263
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_263'>1</a>
+<span>
+1. inject : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject(instance, locator.getService( requirement ), fieldName);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_264'/>
+264
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_264'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_265'/>
+265
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_265'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_266'/>
+266
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_266'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void inject( Object instance, Object requirement, String fieldName ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_267'/>
+267
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_267'>1</a>
+<span>
+1. inject : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject( instance.getClass(), instance, requirement, fieldName );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_268'/>
+268
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_268'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_269'/>
+269
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_269'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_270'/>
+270
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_270'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void inject( Class&#60;?&#62; clazz, Object instance, Object requirement, String fieldName ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_271'/>
+271
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_271'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_272'/>
+272
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_272'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            Field field = clazz.getDeclaredField( fieldName );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_273'/>
+273
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_273'>1</a>
+<span>
+1. inject : removed call to java/lang/reflect/Field::setAccessible &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            field.setAccessible( true );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_274'/>
+274
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_274'>1</a>
+<span>
+1. inject : removed call to java/lang/reflect/Field::set &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            field.set( instance, requirement );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_275'/>
+275
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_275'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        } catch (NoSuchFieldException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_276'/>
+276
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_276'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            Class&#60;?&#62; superClass = clazz.getSuperclass();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_277'/>
+277
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_277'>1</a>
+<span>
+1. inject : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (superClass != null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_278'/>
+278
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_278'>1</a>
+<span>
+1. inject : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>                inject( superClass, instance, requirement, fieldName );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_279'/>
+279
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_279'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            } else {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_280'/>
+280
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_280'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>                throw new RuntimeException( e );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_281'/>
+281
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_281'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_282'/>
+282
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_282'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        } catch (Exception e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_283'/>
+283
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_283'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            throw new RuntimeException( e );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_284'/>
+284
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_284'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_285'/>
+285
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_285'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_286'/>
+286
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_286'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_287'/>
+287
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_287'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_288'/>
+288
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_288'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public &#60;T&#62; T lookup( Class&#60;T&#62; clazz ) throws ComponentLookupException {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_289'/>
+289
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_289'>1</a>
+<span>
+1. lookup : mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::lookup to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return locator.getService( clazz );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_290'/>
+290
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_290'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_291'/>
+291
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_291'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_292'/>
+292
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_292'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_293'/>
+293
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_293'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public RepositorySystemSession getRepositorySystemSession( MavenExecutionRequest mavenExecutionRequest ) throws ComponentLookupException {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_294'/>
+294
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_294'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        DefaultMaven defaultMaven = (DefaultMaven) lookup( Maven.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_295'/>
+295
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_295'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        RepositorySystemSession session = defaultMaven.newRepositorySession( mavenExecutionRequest );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_296'/>
+296
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_296'>1</a>
+<span>
+1. getRepositorySystemSession : removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inject(session.getArtifactTypeRegistry(), ArtifactHandlerManager.class, &#34;handlerManager&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_297'/>
+297
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_297'>1</a>
+<span>
+1. getRepositorySystemSession : mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::getRepositorySystemSession to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return session;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_298'/>
+298
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_298'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_299'/>
+299
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_299'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_300'/>
+300
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_300'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_301'/>
+301
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_301'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public PlexusContainer getPlexusContainer() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_302'/>
+302
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_302'>1</a>
+<span>
+1. getPlexusContainer : mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::getPlexusContainer to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_303'/>
+303
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_303'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_304'/>
+304
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_304'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_305'/>
+305
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_305'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_306'/>
+306
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_306'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public ClassLoader getSystemClassLoader() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_307'/>
+307
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_307'>1</a>
+<span>
+1. getSystemClassLoader : mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::getSystemClassLoader to ( if (x != null) null else throw new RuntimeException ) &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return Thread.currentThread().getContextClassLoader();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_308'/>
+308
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_308'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1c37bf91_309'/>
+309
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_309'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_125'>125</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_125'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::initServiceLocator &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_173'>173</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_173'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_178'>178</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_178'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_179'>179</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_179'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_180'>180</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_180'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_181'>181</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_181'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_183'>183</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_183'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_184'>184</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_184'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_185'>185</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_185'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_187'>187</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_187'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_188'>188</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_188'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_191'>191</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_191'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/apache/maven/eventspy/internal/EventSpyDispatcher::setEventSpies &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_192'>192</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_192'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_193'>193</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_193'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_194'>194</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_194'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_195'>195</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_195'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_197'>197</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_197'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_198'>198</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_198'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_200'>200</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_200'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_201'>201</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_201'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_202'>202</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_202'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_203'>203</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_203'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_204'>204</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_204'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_205'>205</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_205'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_207'>207</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_207'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_208'>208</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_208'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_209'>209</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_209'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_210'>210</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_210'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_211'>211</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_211'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_212'>212</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_212'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_214'>214</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_214'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_215'>215</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_215'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_217'>217</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_217'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_219'>219</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_219'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_220'>220</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_220'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_221'>221</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_221'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_222'>222</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_222'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_223'>223</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_223'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_224'>224</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_224'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_226'>226</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_226'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_227'>227</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_227'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_228'>228</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_228'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_229'>229</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_229'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_230'>230</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_230'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_231'>231</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_231'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_232'>232</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_232'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_233'>233</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_233'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_234'>234</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_234'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_235'>235</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_235'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_236'>236</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_236'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_237'>237</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_237'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_238'>238</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_238'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>initServiceLocator<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_244'>244</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_244'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>buildArtifactHandlers<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::buildArtifactHandlers to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_249'>249</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_249'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>buildArtifactHandler<br/><b>Killed by : </b>none</span></span> removed call to org/apache/maven/artifact/handler/DefaultArtifactHandler::setLanguage &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_250'>250</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_250'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>buildArtifactHandler<br/><b>Killed by : </b>none</span></span> removed call to org/apache/maven/artifact/handler/DefaultArtifactHandler::setAddedToClasspath &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_251'>251</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_251'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>buildArtifactHandler<br/><b>Killed by : </b>none</span></span> mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::buildArtifactHandler to ( if (x != null) null else throw new RuntimeException ) &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_255'>255</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_255'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inject<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_259'>259</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_259'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inject<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_263'>263</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_263'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inject<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testTypeAndRuleInDifferentKieModules[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_267'>267</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_267'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inject<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_273'>273</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_273'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inject<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to java/lang/reflect/Field::setAccessible &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_274'>274</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_274'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inject<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to java/lang/reflect/Field::set &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_277'>277</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_277'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inject<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_278'>278</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_278'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inject<br/><b>Killed by : </b>none</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_289'>289</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_289'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lookup<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::lookup to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_296'>296</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_296'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getRepositorySystemSession<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testTypeAndRuleInDifferentKieModules[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> removed call to org/kie/scanner/embedder/WiredComponentProvider::inject &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_297'>297</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_297'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getRepositorySystemSession<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKieScannerScopesNotRequired[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::getRepositorySystemSession to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_302'>302</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_302'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPlexusContainer<br/><b>Killed by : </b>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest)</span></span> mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::getPlexusContainer to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1c37bf91_307'>307</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1c37bf91_307'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getSystemClassLoader<br/><b>Killed by : </b>none</span></span> mutated return of Object value for org/kie/scanner/embedder/WiredComponentProvider::getSystemClassLoader to ( if (x != null) null else throw new RuntimeException ) &rarr; SURVIVED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.kie.scanner.KieRepositoryScannerTest.testKScanner[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1075 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testScannerOnPomRuleProject[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1072 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithRange[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1180 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testMissingDependency[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1464 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithGDRL[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1064 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithKJarContainingClasses[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1091 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartScanNow[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1168 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testScannerOnPomProjectSameKieSession[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (2148 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithFunction[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1099 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testScannerOnPomProject[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1112 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKJarContainingClassLoadedFromClassLoaderSameKBase[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1123 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testScannerOnPomProjectWithFixedVersion[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (2109 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKJarContainingClassLoadedFromClassLoaderDifferentKBase[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1115 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithKJarContainingTypeDeclaration[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1120 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKieScannerScopesNotRequired[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (244 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testScanIncludedDependency[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1094 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithNewFunction[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (1131 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (33 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (18 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testTypeAndRuleInDifferentKieModules[Manually wired component provider=true](org.kie.scanner.KieRepositoryScannerTest) (49 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.12-SNAPSHOT
+
+</body>
+</html>

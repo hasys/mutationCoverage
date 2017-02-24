@@ -1,0 +1,1360 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>IdentityAssertMapComparator.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2005 Red Hat, Inc. and/or its affiliates.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.drools.core.common;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.IOException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.ObjectInput;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.ObjectOutput;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.core.factmodel.traits.CoreWrapper;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.core.factmodel.traits.TraitTypeEnum;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.core.util.AbstractHashTable;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.core.util.AbstractHashTable.AbstractObjectComparator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class IdentityAssertMapComparator</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    extends</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    AbstractObjectComparator {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static final long serialVersionUID = 510l;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_34'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public IdentityAssertMapComparator() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_35'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_38'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void writeExternal(ObjectOutput out) throws IOException {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_41'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int hashCodeOf(final Object obj) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_44'/>
+44
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_44'>1</a>
+<span>
+1. hashCodeOf : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (obj instanceof InternalFactHandle) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_45'/>
+45
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_45'>1</a>
+<span>
+1. hashCodeOf : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return AbstractHashTable.rehash(((InternalFactHandle)obj).getIdentityHashCode());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_46'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        } else {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_47'/>
+47
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_47'>1</a>
+<span>
+1. hashCodeOf : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return AbstractHashTable.rehash( System.identityHashCode( obj ) );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_48'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_50'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Special comparator that allows FactHandles to be keys, but always  checks</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_53'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * like for like.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_55'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public boolean equal(final Object o1,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_56'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                         final Object o2) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_57'/>
+57
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_57'>1</a>
+<span>
+1. equal : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if ( o1 instanceof InternalFactHandle ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_58'/>
+58
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_58'>2</a>
+<span>
+1. equal : negated conditional &rarr; KILLED<br/>
+2. equal : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return ((InternalFactHandle) o1).getId() == ((InternalFactHandle) o2).getId();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_60'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        Object left = o1;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_61'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        final InternalFactHandle handle = ((InternalFactHandle) o2);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_62'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_63'/>
+63
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_63'>1</a>
+<span>
+1. equal : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if ( left == handle.getObject() ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_64'/>
+64
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_64'>1</a>
+<span>
+1. equal : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return true;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_65'/>
+65
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_65'>1</a>
+<span>
+1. equal : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        } else if ( handle.getTraitType() == TraitTypeEnum.WRAPPED_TRAITABLE ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_66'/>
+66
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_66'>2</a>
+<span>
+1. equal : negated conditional &rarr; NO_COVERAGE<br/>
+2. equal : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>            return left == ( (CoreWrapper) handle.getObject() ).getCore();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_67'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        } else {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_68'/>
+68
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_68'>1</a>
+<span>
+1. equal : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return false;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_69'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_70'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_72'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int compare(final Object o1,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                       final Object o2) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_74'/>
+74
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_74'>1</a>
+<span>
+1. compare : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        return ((Comparable) o1).compareTo( o2 );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_75'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_76'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_77'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public String toString() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_78'/>
+78
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_78'>1</a>
+<span>
+1. toString : mutated return of Object value for org/drools/core/common/IdentityAssertMapComparator::toString to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        return &#34;identity&#34;;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_79'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@343b427d_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_80'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_44'>44</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_44'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCodeOf<br/><b>Killed by : </b>org.drools.core.spi.ProcessContextTest.testProcessContextGetData(org.drools.core.spi.ProcessContextTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_45'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCodeOf<br/><b>Killed by : </b>org.drools.core.reteoo.PropertyChangeListenerTest.test1(org.drools.core.reteoo.PropertyChangeListenerTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_47'>47</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_47'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCodeOf<br/><b>Killed by : </b>org.drools.core.reteoo.PropertyChangeListenerTest.test1(org.drools.core.reteoo.PropertyChangeListenerTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_57'>57</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_57'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equal<br/><b>Killed by : </b>org.drools.core.reteoo.ReteooWorkingMemoryTest.testDifferentEntryPointsOnSameFact(org.drools.core.reteoo.ReteooWorkingMemoryTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_58'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equal<br/><b>Killed by : </b>org.drools.core.reteoo.ReteooWorkingMemoryTest.testDifferentEntryPointsOnSameFact(org.drools.core.reteoo.ReteooWorkingMemoryTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>equal<br/><b>Killed by : </b>org.drools.core.reteoo.ReteooWorkingMemoryTest.testDifferentEntryPointsOnSameFact(org.drools.core.reteoo.ReteooWorkingMemoryTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_63'>63</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_63'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equal<br/><b>Killed by : </b>org.drools.core.reteoo.PropertyChangeListenerTest.test1(org.drools.core.reteoo.PropertyChangeListenerTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_64'>64</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_64'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equal<br/><b>Killed by : </b>org.drools.core.reteoo.PropertyChangeListenerTest.test1(org.drools.core.reteoo.PropertyChangeListenerTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_65'>65</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_65'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equal<br/><b>Killed by : </b>org.drools.core.util.ObjectHashMapTest.testIdentityWithResize(org.drools.core.util.ObjectHashMapTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_66'>66</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_66'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equal<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>equal<br/><b>Killed by : </b>none</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_68'>68</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_68'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equal<br/><b>Killed by : </b>org.drools.core.util.ObjectHashMapTest.testIdentityWithResize(org.drools.core.util.ObjectHashMapTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_74'>74</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_74'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>compare<br/><b>Killed by : </b>none</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@343b427d_78'>78</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@343b427d_78'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>toString<br/><b>Killed by : </b>none</span></span> mutated return of Object value for org/drools/core/common/IdentityAssertMapComparator::toString to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.drools.core.reteoo.NodeSegmentUnlinkingTest.testAllLinkedInWithNotNodesOnly(org.drools.core.reteoo.NodeSegmentUnlinkingTest) (2 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.onceSuperClassIsSetUpForReadingItCanBecomeSetUpForWritingWithoutGettingDuplicateQueryReturns[1](org.drools.core.common.ClassAwareObjectStoreTest) (2 ms)</li><li>org.drools.core.reteoo.CrossProductTest.testNotRemoveIdentities(org.drools.core.reteoo.CrossProductTest) (3 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.onceSuperClassIsSetUpForReadingItCanBecomeSetUpForWritingWithoutGettingDuplicateQueryReturns[0](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.reteoo.ReteooWorkingMemoryTest.testObjectIterator(org.drools.core.reteoo.ReteooWorkingMemoryTest) (1 ms)</li><li>org.drools.core.util.ObjectHashMapTest.testEqualityWithResize(org.drools.core.util.ObjectHashMapTest) (2901 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.queryBySuperTypeCanFindSubTypeWhenNoSuperTypeInstancesAreInStore[0](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.spi.ProcessContextTest.testProcessContextGetData(org.drools.core.spi.ProcessContextTest) (1 ms)</li><li>org.drools.core.reteoo.RuleUnlinkingTest.testRuleSegmentLinking(org.drools.core.reteoo.RuleUnlinkingTest) (2 ms)</li><li>org.drools.core.common.LazyTMSEnablingTest.shouldEnableTMSForSpecificType(org.drools.core.common.LazyTMSEnablingTest) (6 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.queryBySuperTypeCanFindSubTypeWhenNoSuperTypeInstancesAreInStore[1](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.reteoo.ReteTest.testAssertObjectWithNoMatchingObjectTypeNode(org.drools.core.reteoo.ReteTest) (1 ms)</li><li>org.drools.core.command.runtime.rule.GetFactHandlesCommandTest.getMultipleDisconnectedFactHandleTest(org.drools.core.command.runtime.rule.GetFactHandlesCommandTest) (3 ms)</li><li>org.drools.core.event.rule.RuleRuntimeEventSupportTest.testAddRuleRuntimeEventListener(org.drools.core.event.rule.RuleRuntimeEventSupportTest) (2 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.canIterateOverObjectsUsingCustomFilter[0](org.drools.core.common.ClassAwareObjectStoreTest) (5 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.clearRemovesInsertedObjects[1](org.drools.core.common.ClassAwareObjectStoreTest) (2 ms)</li><li>org.drools.core.reteoo.NodeSegmentUnlinkingTest.testAllLinkedInWithExistsNodesOnly(org.drools.core.reteoo.NodeSegmentUnlinkingTest) (2 ms)</li><li>org.drools.core.reteoo.NodeSegmentUnlinkingTest.testAllLinkedInWithJoinNodesOnly(org.drools.core.reteoo.NodeSegmentUnlinkingTest) (2 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.iterateObjectsReturnsObjectsOfAllTypes[1](org.drools.core.common.ClassAwareObjectStoreTest) (3 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.isOkayToReinsertSameTypeThenQuery[1](org.drools.core.common.ClassAwareObjectStoreTest) (2 ms)</li><li>org.drools.core.command.runtime.rule.ExecuteCommandDisconnectedTest.executeDisconnected(org.drools.core.command.runtime.rule.ExecuteCommandDisconnectedTest) (215 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.queryBySuperTypeFindsSubType[0](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.iterateByClassFiltersByClass[0](org.drools.core.common.ClassAwareObjectStoreTest) (2 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.iteratingOverFactHandlesHasSameNumberOfResultsAsIteratingOverObjects[1](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.queryBySubtypeDoesNotReturnSuperType[0](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.queryBySubTypeDoesNotPreventInsertionsBeingPropogatedToSuperTypeQueries[0](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.queryBySuperTypeFindsSubType[1](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.reteoo.NodeSegmentUnlinkingTest.testLiaNodeInitialisation(org.drools.core.reteoo.NodeSegmentUnlinkingTest) (2 ms)</li><li>org.drools.core.reteoo.AlphaNodeTest.testLiteralConstraintAssertObjectWithoutMemory(org.drools.core.reteoo.AlphaNodeTest) (9 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.queryBySubTypeDoesNotPreventInsertionsBeingPropogatedToSuperTypeQueries[1](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.queryBySubtypeDoesNotReturnSuperType[1](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.command.runtime.rule.GetFactHandlesCommandTest.getOneFactHandleTest(org.drools.core.command.runtime.rule.GetFactHandlesCommandTest) (1 ms)</li><li>org.drools.core.command.runtime.rule.GetFactHandlesCommandTest.getMultipleFactHandleTest(org.drools.core.command.runtime.rule.GetFactHandlesCommandTest) (1 ms)</li><li>org.drools.core.util.RightTupleIndexHashTableIteratorTest.test1(org.drools.core.util.RightTupleIndexHashTableIteratorTest) (3 ms)</li><li>org.drools.core.event.rule.RuleRuntimeEventSupportTest.testRemoveRuleRuntimeEventListener(org.drools.core.event.rule.RuleRuntimeEventSupportTest) (2 ms)</li><li>org.drools.core.spi.ProcessContextTest.testProcessContextGetAssignment(org.drools.core.spi.ProcessContextTest) (2 ms)</li><li>org.drools.core.util.LeftLeftTupleIndexHashTableIteratorTest.test1(org.drools.core.util.LeftLeftTupleIndexHashTableIteratorTest) (2 ms)</li><li>org.drools.core.reteoo.ReteooWorkingMemoryTest.testDifferentEntryPointsOnSameFact(org.drools.core.reteoo.ReteooWorkingMemoryTest) (1 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.iteratingOverFactHandlesHasSameNumberOfResultsAsIteratingOverObjects[0](org.drools.core.common.ClassAwareObjectStoreTest) (2 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.isOkayToReinsertSameTypeThenQuery[0](org.drools.core.common.ClassAwareObjectStoreTest) (2 ms)</li><li>org.drools.core.reteoo.AlphaNodeTest.testReturnValueConstraintAssertObject(org.drools.core.reteoo.AlphaNodeTest) (3 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.clearRemovesInsertedObjects[0](org.drools.core.common.ClassAwareObjectStoreTest) (1 ms)</li><li>org.drools.core.reteoo.PropertyChangeListenerTest.test1(org.drools.core.reteoo.PropertyChangeListenerTest) (1 ms)</li><li>org.drools.core.reteoo.NodeSegmentUnlinkingTest.testLiaNodeLinking(org.drools.core.reteoo.NodeSegmentUnlinkingTest) (2 ms)</li><li>org.drools.core.util.ObjectHashMapTest.testIdentityWithResize(org.drools.core.util.ObjectHashMapTest) (2847 ms)</li><li>org.drools.core.rule.FieldConstraintTest.testLiteralConstraint(org.drools.core.rule.FieldConstraintTest) (2 ms)</li><li>org.drools.core.rule.FieldConstraintTest.testPrimitiveLiteralConstraint(org.drools.core.rule.FieldConstraintTest) (2 ms)</li><li>org.drools.core.event.RuleRuntimeEventSupportTest.testRuleRuntimeEventListener(org.drools.core.event.RuleRuntimeEventSupportTest) (4 ms)</li><li>org.drools.core.common.LazyTMSEnablingTest.shouldLazilyAdd(org.drools.core.common.LazyTMSEnablingTest) (2 ms)</li><li>org.drools.core.rule.FieldConstraintTest.testPredicateConstraint(org.drools.core.rule.FieldConstraintTest) (2 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.iterateByClassFiltersByClass[1](org.drools.core.common.ClassAwareObjectStoreTest) (3 ms)</li><li>org.drools.core.reteoo.RuleUnlinkingWithSegmentMemoryTest.testRuleSegmentLinking(org.drools.core.reteoo.RuleUnlinkingWithSegmentMemoryTest) (2 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.canIterateOverObjectsUsingCustomFilter[1](org.drools.core.common.ClassAwareObjectStoreTest) (2 ms)</li><li>org.drools.core.examples.manners.ReteooMannersTest.testManners(org.drools.core.examples.manners.ReteooMannersTest) (78 ms)</li><li>org.drools.core.command.runtime.rule.GetFactHandlesCommandTest.getOneDisconnectedFactHandleTest(org.drools.core.command.runtime.rule.GetFactHandlesCommandTest) (1 ms)</li><li>org.drools.core.reteoo.CrossProductTest.testRemoveIdentities(org.drools.core.reteoo.CrossProductTest) (4 ms)</li><li>org.drools.core.common.ClassAwareObjectStoreTest.iterateObjectsReturnsObjectsOfAllTypes[0](org.drools.core.common.ClassAwareObjectStoreTest) (2 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.12-SNAPSHOT
+
+</body>
+</html>

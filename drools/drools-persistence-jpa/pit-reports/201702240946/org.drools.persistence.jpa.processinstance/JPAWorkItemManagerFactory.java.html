@@ -1,0 +1,498 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>JPAWorkItemManagerFactory.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2015 Red Hat, Inc. and/or its affiliates.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>*/</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.drools.persistence.jpa.processinstance;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.core.common.InternalKnowledgeRuntime;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.core.process.instance.WorkItemManager;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.core.process.instance.WorkItemManagerFactory;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_22'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>public class JPAWorkItemManagerFactory implements WorkItemManagerFactory {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public WorkItemManager createWorkItemManager(InternalKnowledgeRuntime kruntime) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_25'/>
+25
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_25'>1</a>
+<span>
+1. createWorkItemManager : mutated return of Object value for org/drools/persistence/jpa/processinstance/JPAWorkItemManagerFactory::createWorkItemManager to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return new JPAWorkItemManager(kruntime);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@448987fa_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@448987fa_25'>25</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@448987fa_25'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createWorkItemManager<br/><b>Killed by : </b>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testInterceptor[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest)</span></span> mutated return of Object value for org/drools/persistence/jpa/processinstance/JPAWorkItemManagerFactory::createWorkItemManager to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest.testBatchGetErrors[pessimistic](org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest) (566 ms)</li><li>org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest.testKBuilderAdd[pessimistic](org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest) (570 ms)</li><li>org.drools.persistence.monitoring.MonitoringWithJPAKnowledgeServiceTest.testBasic(org.drools.persistence.monitoring.MonitoringWithJPAKnowledgeServiceTest) (592 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testMoreComplexRulesSerialization[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (541 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testGetObjectsCommand[pessimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (546 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testMergeConfig[optimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (528 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testFactHandleSerialization[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (542 ms)</li><li>org.drools.persistence.map.impl.JpaBasedPersistenceTest.insertObjectIntoKsessionAndRetrieve[pessimistic](org.drools.persistence.map.impl.JpaBasedPersistenceTest) (586 ms)</li><li>org.drools.persistence.timer.integrationtests.TimerAndCalendarTest.testEventExpires[pessimistic](org.drools.persistence.timer.integrationtests.TimerAndCalendarTest) (534 ms)</li><li>org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest.testBatchGetErrors[optimistic](org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest) (2066 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testGetGlobalCommand[pessimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (586 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testUserTransactions[optimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (651 ms)</li><li>org.drools.persistence.session.RuleFlowGroupRollbackTest.testRuleFlowGroupRollback[optimistic](org.drools.persistence.session.RuleFlowGroupRollbackTest) (535 ms)</li><li>org.drools.persistence.session.RuleFlowGroupRollbackTest.testRuleFlowGroupRollback[pessimistic](org.drools.persistence.session.RuleFlowGroupRollbackTest) (4041 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testSessionConfigurationFromContainer[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (4031 ms)</li><li>org.drools.persistence.session.JpaPersistenceTraitTest.testTraitWithJPAOnFreshKieBase[pessimistic](org.drools.persistence.session.JpaPersistenceTraitTest) (3583 ms)</li><li>org.drools.persistence.kie.persistence.session.PersistentSessionForallTest.testNotMatchedCombination[pessimistic](org.drools.persistence.kie.persistence.session.PersistentSessionForallTest) (561 ms)</li><li>org.drools.persistence.kie.persistence.session.PersistentSessionForallTest.testNotMatchedCombination[optimistic](org.drools.persistence.kie.persistence.session.PersistentSessionForallTest) (562 ms)</li><li>org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest.testKBuilderAdd[optimistic](org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest) (573 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testInsertObjectCommand[optimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (551 ms)</li><li>org.drools.persistence.session.AgendaRuleFlowGroupsTest.testAgendaGroupAndRuleFlowGroup[0](org.drools.persistence.session.AgendaRuleFlowGroupsTest) (4085 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testFromNodeWithModifiedCollection[pessimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (4531 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testMergeConfig[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (540 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testLocalTransactionPerStatement[optimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (4068 ms)</li><li>org.drools.persistence.session.AgendaRuleFlowGroupsTest.testAgendaGroupAndRuleFlowGroup[1](org.drools.persistence.session.AgendaRuleFlowGroupsTest) (4077 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testInterceptor[pessimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (4067 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testInterceptorOnRollback[optimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (544 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testGetObjectsCommand[optimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (538 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testInterceptor[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (523 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testInsertObjectCommand[pessimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (558 ms)</li><li>org.drools.persistence.kie.persistence.cdi.CDITest.testCDI[optimistic](org.drools.persistence.kie.persistence.cdi.CDITest) (1542 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testInterceptor[optimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (4076 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testLocalTransactionPerStatement[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (537 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testLocalTransactionPerStatement[pessimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (558 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testFactHandleSerialization[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (560 ms)</li><li>org.drools.persistence.command.MoreBatchExecutionPersistenceTest.testFireAllRules[optimistic](org.drools.persistence.command.MoreBatchExecutionPersistenceTest) (662 ms)</li><li>org.drools.persistence.kie.persistence.cdi.CDITest.testCDI[pessimistic](org.drools.persistence.kie.persistence.cdi.CDITest) (524 ms)</li><li>org.drools.persistence.timer.integrationtests.TimerAndCalendarTest.testEventExpires[optimistic](org.drools.persistence.timer.integrationtests.TimerAndCalendarTest) (4047 ms)</li><li>org.drools.persistence.session.AgendaRuleFlowGroupsTest.testAgendaGroupOnly[0](org.drools.persistence.session.AgendaRuleFlowGroupsTest) (4091 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testCreateAndDestroySession[optimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (592 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testCreateAndDestroySession[pessimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (590 ms)</li><li>org.drools.persistence.map.impl.JpaBasedPersistenceTest.insertObjectIntoKsessionAndRetrieve[optimistic](org.drools.persistence.map.impl.JpaBasedPersistenceTest) (591 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testUserTransactions[pessimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (4547 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testInsertElementsCommand[pessimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (535 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testLocalTransactionPerStatement[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (540 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testGetCount[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (532 ms)</li><li>org.drools.persistence.command.MoreBatchExecutionPersistenceTest.testQuery[pessimistic](org.drools.persistence.command.MoreBatchExecutionPersistenceTest) (590 ms)</li><li>org.drools.persistence.timer.integrationtests.TimerAndCalendarTest.testTimerWithRemovingRule[optimistic](org.drools.persistence.timer.integrationtests.TimerAndCalendarTest) (5564 ms)</li><li>org.drools.persistence.session.ReloadSessionTest.reloadKnowledgeSessionTest[pessimistic](org.drools.persistence.session.ReloadSessionTest) (539 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testMergeConfig[pessimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (3533 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testSetFocus[pessimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (573 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testSharedReferences[optimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (571 ms)</li><li>org.drools.persistence.session.JpaPersistenceTraitTest.testTraitsOnLegacyJPATriple[optimistic](org.drools.persistence.session.JpaPersistenceTraitTest) (596 ms)</li><li>org.drools.persistence.session.JpaPersistenceTraitTest.testTraitsOnLegacyJPAMap[optimistic](org.drools.persistence.session.JpaPersistenceTraitTest) (596 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testGetObjectCommand[pessimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (588 ms)</li><li>org.drools.persistence.session.JpaPersistenceTraitTest.testMapBasedTraitsWithJPA[pessimistic](org.drools.persistence.session.JpaPersistenceTraitTest) (594 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testSetGlobalCommand[pessimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (620 ms)</li><li>org.drools.persistence.map.impl.JpaBasedPersistenceTest.createPersistentSession[optimistic](org.drools.persistence.map.impl.JpaBasedPersistenceTest) (4071 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testUserTransactions[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (531 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testGetFactHandles[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (541 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testGetObjectCommand[optimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (652 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testSharedReferences[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (4110 ms)</li><li>org.drools.persistence.session.JpaPersistenceTraitTest.testTripleBasedTraitsWithJPA[pessimistic](org.drools.persistence.session.JpaPersistenceTraitTest) (4117 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testTraitsSerialization[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (535 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testMergeConfig[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (528 ms)</li><li>org.drools.persistence.session.JpaPersistenceTraitTest.testTraitsOnLegacyJPATriple[pessimistic](org.drools.persistence.session.JpaPersistenceTraitTest) (590 ms)</li><li>org.drools.persistence.command.MoreBatchExecutionPersistenceTest.testFireAllRules[pessimistic](org.drools.persistence.command.MoreBatchExecutionPersistenceTest) (632 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testSetGlobalCommand[optimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (564 ms)</li><li>org.drools.persistence.map.impl.JpaBasedPersistenceTest.dontCreateMoreSessionsThanNecessary[pessimistic](org.drools.persistence.map.impl.JpaBasedPersistenceTest) (4103 ms)</li><li>org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest.testGetKnowledgePackages[pessimistic](org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest) (574 ms)</li><li>org.drools.persistence.session.AgendaRuleFlowGroupsTest.testRuleFlowGroupOnly[0](org.drools.persistence.session.AgendaRuleFlowGroupsTest) (3578 ms)</li><li>org.drools.persistence.command.MoreBatchExecutionPersistenceTest.testQuery[optimistic](org.drools.persistence.command.MoreBatchExecutionPersistenceTest) (582 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testSessionConfigurationFromContainer[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (615 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testGetGlobalCommand[optimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (580 ms)</li><li>org.drools.persistence.session.AgendaRuleFlowGroupsTest.testRuleFlowGroupOnly[1](org.drools.persistence.session.AgendaRuleFlowGroupsTest) (581 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testSharedReferences[pessimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (3561 ms)</li><li>org.drools.persistence.map.impl.JpaBasedPersistenceTest.dontCreateMoreSessionsThanNecessary[optimistic](org.drools.persistence.map.impl.JpaBasedPersistenceTest) (3584 ms)</li><li>org.drools.persistence.jta.JtaTransactionManagerTest.testSingleSessionCommandServiceAndJtaTransactionManagerTogether(org.drools.persistence.jta.JtaTransactionManagerTest) (534 ms)</li><li>org.drools.persistence.timer.integrationtests.TimerAndCalendarTest.testTimerWithRemovingRule[pessimistic](org.drools.persistence.timer.integrationtests.TimerAndCalendarTest) (5669 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testFactHandleSerialization[optimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (712 ms)</li><li>org.drools.persistence.session.JpaPersistenceTraitTest.testTraitsOnLegacyJPAMap[pessimistic](org.drools.persistence.session.JpaPersistenceTraitTest) (4589 ms)</li><li>org.drools.persistence.session.JpaPersistenceTraitTest.testTraitWithJPAOnFreshKieBase[optimistic](org.drools.persistence.session.JpaPersistenceTraitTest) (587 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testFromNodeWithModifiedCollection[optimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (3540 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testTraitsSerialization[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (4543 ms)</li><li>org.drools.persistence.session.JpaPersistenceTraitTest.testTripleBasedTraitsWithJPA[optimistic](org.drools.persistence.session.JpaPersistenceTraitTest) (581 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testInterceptor[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (530 ms)</li><li>org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest.testHasErrors[optimistic](org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest) (569 ms)</li><li>org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest.testGetKnowledgePackages[optimistic](org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest) (1085 ms)</li><li>org.drools.persistence.session.AgendaRuleFlowGroupsTest.testAgendaGroupOnly[1](org.drools.persistence.session.AgendaRuleFlowGroupsTest) (4107 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testSetFocus[optimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (4581 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testFactHandleSerialization[pessimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (4044 ms)</li><li>org.drools.persistence.map.impl.JpaBasedPersistenceTest.createPersistentSessionWithRules[pessimistic](org.drools.persistence.map.impl.JpaBasedPersistenceTest) (571 ms)</li><li>org.drools.persistence.session.ReloadSessionTest.reloadKnowledgeSessionTest[optimistic](org.drools.persistence.session.ReloadSessionTest) (603 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testSetFocus[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (4049 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testMoreComplexRulesSerialization[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (542 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testGetFactHandles[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (599 ms)</li><li>org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest.testHasErrors[pessimistic](org.drools.persistence.command.KBuilderBatchExecutionPersistenceTest) (634 ms)</li><li>org.drools.persistence.map.impl.JpaBasedPersistenceTest.createPersistentSessionWithRules[optimistic](org.drools.persistence.map.impl.JpaBasedPersistenceTest) (4075 ms)</li><li>org.drools.persistence.map.impl.JpaBasedPersistenceTest.createPersistentSession[pessimistic](org.drools.persistence.map.impl.JpaBasedPersistenceTest) (592 ms)</li><li>org.drools.persistence.session.JpaPersistentStatefulSessionTest.testInterceptorOnRollback[pessimistic](org.drools.persistence.session.JpaPersistentStatefulSessionTest) (4042 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testSharedReferences[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (547 ms)</li><li>org.drools.persistence.command.SimpleBatchExecutionPersistenceTest.testInsertElementsCommand[optimistic](org.drools.persistence.command.SimpleBatchExecutionPersistenceTest) (570 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testSetFocus[pessimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (4023 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testGetCount[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (529 ms)</li><li>org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest.testUserTransactions[optimistic](org.drools.persistence.kie.persistence.session.JpaPersistentStatefulSessionTest) (549 ms)</li><li>org.drools.persistence.session.JpaPersistenceTraitTest.testMapBasedTraitsWithJPA[optimistic](org.drools.persistence.session.JpaPersistenceTraitTest) (605 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.12-SNAPSHOT
+
+</body>
+</html>

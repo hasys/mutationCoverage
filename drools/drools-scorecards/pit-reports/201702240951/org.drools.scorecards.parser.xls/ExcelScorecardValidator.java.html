@@ -1,0 +1,3111 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>ExcelScorecardValidator.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>* Copyright 2012 Red Hat, Inc. and/or its affiliates.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>* Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>* you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>* You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>*      http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>* Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>* distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>* See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>* limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>*/</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.drools.scorecards.parser.xls;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.dmg.pmml.pmml_4_2.descr.Attribute;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.dmg.pmml.pmml_4_2.descr.Characteristic;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.dmg.pmml.pmml_4_2.descr.Characteristics;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.dmg.pmml.pmml_4_2.descr.Scorecard;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.core.util.StringUtils;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.pmml.pmml_4_2.extensions.AggregationStrategy;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.pmml.pmml_4_2.PMML4Helper;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.scorecards.ScorecardError;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.scorecards.StringUtil;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.scorecards.pmml.ScorecardPMMLExtensionNames;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.scorecards.pmml.ScorecardPMMLUtils;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>class ExcelScorecardValidator {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_34'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private Scorecard scorecard;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private List&#60;ScorecardError&#62; parseErrors;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_38'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private ExcelScorecardValidator(Scorecard scorecard, List&#60;ScorecardError&#62; parseErrors) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        //to ensure this used as a pure Util class only.</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_40'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.scorecard = scorecard;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_41'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.parseErrors = parseErrors;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_42'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static void runAdditionalValidations(Scorecard scorecard, List&#60;ScorecardError&#62; parseErrors) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_45'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        ExcelScorecardValidator validator = new ExcelScorecardValidator(scorecard, parseErrors);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_46'/>
+46
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_46'>1</a>
+<span>
+1. runAdditionalValidations : removed call to org/drools/scorecards/parser/xls/ExcelScorecardValidator::checkForInvalidDataTypes &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        validator.checkForInvalidDataTypes();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_47'/>
+47
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_47'>1</a>
+<span>
+1. runAdditionalValidations : removed call to org/drools/scorecards/parser/xls/ExcelScorecardValidator::checkForMissingAttributes &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        validator.checkForMissingAttributes();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_48'/>
+48
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_48'>1</a>
+<span>
+1. runAdditionalValidations : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (scorecard.getUseReasonCodes()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_49'/>
+49
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_49'>1</a>
+<span>
+1. runAdditionalValidations : removed call to org/drools/scorecards/parser/xls/ExcelScorecardValidator::validateReasonCodes &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            validator.validateReasonCodes();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_50'/>
+50
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_50'>1</a>
+<span>
+1. runAdditionalValidations : removed call to org/drools/scorecards/parser/xls/ExcelScorecardValidator::validateBaselineScores &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            validator.validateBaselineScores();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_52'/>
+52
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_52'>1</a>
+<span>
+1. runAdditionalValidations : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if ( getScoringStrategy(scorecard).toString().startsWith(&#34;WEIGHTED&#34;)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_53'/>
+53
+</td>
+<td class='uncertain'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_53'>1</a>
+<span>
+1. runAdditionalValidations : removed call to org/drools/scorecards/parser/xls/ExcelScorecardValidator::validateWeights &rarr; TIMED_OUT<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='uncertain'>            validator.validateWeights();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_55'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_56'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_57'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_58'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void validateWeights() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_59'/>
+59
+</td>
+<td class='uncertain'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_59'>1</a>
+<span>
+1. validateWeights : negated conditional &rarr; TIMED_OUT<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='uncertain'>        for (Object obj :scorecard.getExtensionsAndCharacteristicsAndMiningSchemas()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_60'/>
+60
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_60'>1</a>
+<span>
+1. validateWeights : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (obj instanceof Characteristics){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_61'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                Characteristics characteristics = (Characteristics)obj;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_62'/>
+62
+</td>
+<td class='uncertain'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_62'>1</a>
+<span>
+1. validateWeights : negated conditional &rarr; TIMED_OUT<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='uncertain'>                for (Characteristic characteristic : characteristics.getCharacteristics()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_63'/>
+63
+</td>
+<td class='uncertain'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_63'>1</a>
+<span>
+1. validateWeights : negated conditional &rarr; TIMED_OUT<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='uncertain'>                    for (Attribute attribute : characteristic.getAttributes()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_64'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        String newCellRef = createDataTypeCellRef(ScorecardPMMLUtils.getExtensionValue(attribute.getExtensions(), &#34;cellRef&#34;),2);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_65'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        String weight = ScorecardPMMLUtils.getExtensionValue(attribute.getExtensions(), ScorecardPMMLExtensionNames.CHARACTERTISTIC_WEIGHT);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_66'/>
+66
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_66'>2</a>
+<span>
+1. validateWeights : negated conditional &rarr; KILLED<br/>
+2. validateWeights : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                        if ( StringUtils.isEmpty(weight) || !isDouble(weight)){</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_67'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>                            parseErrors.add(new ScorecardError(newCellRef, &#34;Attribute is missing weight or specified weight is not a double.&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_68'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_69'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_70'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_72'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_73'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_74'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_75'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    protected boolean isDouble(String doubleStr){</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_76'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_77'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            Double.parseDouble(doubleStr);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_78'/>
+78
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_78'>1</a>
+<span>
+1. isDouble : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return true;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_79'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        } catch (Exception e){</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_80'/>
+80
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_80'>1</a>
+<span>
+1. isDouble : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>            return  false;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_81'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_82'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_83'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_84'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void validateReasonCodes() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_85'/>
+85
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_85'>1</a>
+<span>
+1. validateReasonCodes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (Object obj :scorecard.getExtensionsAndCharacteristicsAndMiningSchemas()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_86'/>
+86
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_86'>1</a>
+<span>
+1. validateReasonCodes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (obj instanceof Characteristics){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_87'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                Characteristics characteristics = (Characteristics)obj;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_88'/>
+88
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_88'>1</a>
+<span>
+1. validateReasonCodes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                for (Characteristic characteristic : characteristics.getCharacteristics()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_89'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    String charReasonCode = characteristic.getReasonCode();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_90'/>
+90
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_90'>2</a>
+<span>
+1. validateReasonCodes : negated conditional &rarr; KILLED<br/>
+2. validateReasonCodes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    if (charReasonCode == null || StringUtils.isEmpty(charReasonCode)){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_91'/>
+91
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_91'>1</a>
+<span>
+1. validateReasonCodes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                        for (Attribute attribute : characteristic.getAttributes()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_92'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                            String newCellRef = createDataTypeCellRef(ScorecardPMMLUtils.getExtensionValue(attribute.getExtensions(), &#34;cellRef&#34;),3);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_93'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                            String attrReasonCode = attribute.getReasonCode();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_94'/>
+94
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_94'>2</a>
+<span>
+1. validateReasonCodes : negated conditional &rarr; KILLED<br/>
+2. validateReasonCodes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                            if ( attrReasonCode == null || StringUtils.isEmpty(attrReasonCode)){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_95'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                parseErrors.add(new ScorecardError(newCellRef, &#34;Attribute is missing Reason Code&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_96'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_97'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_98'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_99'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_100'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_101'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_102'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_103'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_104'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void validateBaselineScores() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_105'/>
+105
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_105'>1</a>
+<span>
+1. validateBaselineScores : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (Object obj :scorecard.getExtensionsAndCharacteristicsAndMiningSchemas()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_106'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            Double scorecardBaseline = scorecard.getBaselineScore();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_107'/>
+107
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_107'>1</a>
+<span>
+1. validateBaselineScores : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (obj instanceof Characteristics){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_108'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                Characteristics characteristics = (Characteristics)obj;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_109'/>
+109
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_109'>1</a>
+<span>
+1. validateBaselineScores : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                for (Characteristic characteristic : characteristics.getCharacteristics()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_110'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    Double charBaseline = characteristic.getBaselineScore();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_111'/>
+111
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_111'>3</a>
+<span>
+1. validateBaselineScores : negated conditional &rarr; KILLED<br/>
+2. validateBaselineScores : negated conditional &rarr; KILLED<br/>
+3. validateBaselineScores : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    if  ( (charBaseline == null || charBaseline.doubleValue() == 0)</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_112'/>
+112
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_112'>1</a>
+<span>
+1. validateBaselineScores : negated conditional &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>                            &#38;&#38; ((scorecardBaseline == null || scorecardBaseline.doubleValue() == 0)) ){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_113'/>
+113
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_113'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        String newCellRef = createDataTypeCellRef(ScorecardPMMLUtils.getExtensionValue(characteristic.getExtensions(), &#34;cellRef&#34;),2);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_114'/>
+114
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_114'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        parseErrors.add(new ScorecardError(newCellRef, &#34;Characteristic is missing Baseline Score&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_115'/>
+115
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_115'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_116'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_117'/>
+117
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_117'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_118'/>
+118
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_118'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_119'/>
+119
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_119'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_120'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_121'/>
+121
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_121'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void checkForInvalidDataTypes() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_122'/>
+122
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_122'>1</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (Object obj :scorecard.getExtensionsAndCharacteristicsAndMiningSchemas()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_123'/>
+123
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_123'>1</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (obj instanceof Characteristics){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_124'/>
+124
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_124'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                Characteristics characteristics = (Characteristics)obj;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_125'/>
+125
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_125'>1</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                for (Characteristic characteristic : characteristics.getCharacteristics()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_126'/>
+126
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_126'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    String dataType = ScorecardPMMLUtils.getExtensionValue(characteristic.getExtensions(), ScorecardPMMLExtensionNames.CHARACTERTISTIC_DATATYPE);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_127'/>
+127
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_127'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    String newCellRef = createDataTypeCellRef(ScorecardPMMLUtils.getExtensionValue(characteristic.getExtensions(), &#34;cellRef&#34;),1);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_128'/>
+128
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_128'>2</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+2. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    if ( dataType == null || StringUtils.isEmpty(dataType)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_129'/>
+129
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_129'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        parseErrors.add(new ScorecardError(newCellRef, &#34;Missing Data Type!&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_130'/>
+130
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_130'>3</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+2. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+3. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    }  else  if ( !XLSKeywords.DATATYPE_TEXT.equalsIgnoreCase(dataType) &#38;&#38; !XLSKeywords.DATATYPE_NUMBER.equalsIgnoreCase(dataType)  &#38;&#38; !XLSKeywords.DATATYPE_BOOLEAN.equalsIgnoreCase(dataType)){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_131'/>
+131
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_131'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        parseErrors.add(new ScorecardError(newCellRef, &#34;Invalid Data Type!&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_132'/>
+132
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_132'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_133'/>
+133
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_133'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_134'/>
+134
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_134'>1</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    if (XLSKeywords.DATATYPE_BOOLEAN.equalsIgnoreCase(dataType)){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_135'/>
+135
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_135'>1</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                        for (Attribute attribute : characteristic.getAttributes()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_136'/>
+136
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_136'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                            String value = ScorecardPMMLUtils.getExtensionValue(attribute.getExtensions(), &#34;predicateResolver&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_137'/>
+137
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_137'>2</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+2. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                            if (!&#34;TRUE&#34;.equalsIgnoreCase(value) &#38;&#38; !&#34;FALSE&#34;.equalsIgnoreCase(value)){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_138'/>
+138
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_138'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                parseErrors.add(new ScorecardError(newCellRef, &#34;Characteristic &#39;&#34;+characteristic.getName()+&#34;&#39; is Boolean and can support TRUE|FALSE only&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_139'/>
+139
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_139'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                break;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_140'/>
+140
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_140'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_141'/>
+141
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_141'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_142'/>
+142
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_142'>1</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    } else if (XLSKeywords.DATATYPE_NUMBER.equalsIgnoreCase(dataType)){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_143'/>
+143
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_143'>1</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                        for (Attribute attribute : characteristic.getAttributes()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_144'/>
+144
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_144'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                            String value = ScorecardPMMLUtils.getExtensionValue(attribute.getExtensions(), &#34;predicateResolver&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_145'/>
+145
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_145'>1</a>
+<span>
+1. checkForInvalidDataTypes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                            if (!StringUtil.isNumericWithOperators(value)){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_146'/>
+146
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_146'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                parseErrors.add(new ScorecardError(newCellRef, &#34;Characteristic &#39;&#34;+characteristic.getName()+&#34;&#39; is Number and can support numerics only&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_147'/>
+147
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_147'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_148'/>
+148
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_148'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_149'/>
+149
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_149'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_150'/>
+150
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_150'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_151'/>
+151
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_151'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_152'/>
+152
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_152'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_153'/>
+153
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_153'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_154'/>
+154
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_154'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_155'/>
+155
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_155'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void checkForMissingAttributes() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_156'/>
+156
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_156'>1</a>
+<span>
+1. checkForMissingAttributes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (Object obj :scorecard.getExtensionsAndCharacteristicsAndMiningSchemas()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_157'/>
+157
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_157'>1</a>
+<span>
+1. checkForMissingAttributes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (obj instanceof Characteristics){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_158'/>
+158
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_158'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                Characteristics characteristics = (Characteristics)obj;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_159'/>
+159
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_159'>1</a>
+<span>
+1. checkForMissingAttributes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                for (Characteristic characteristic : characteristics.getCharacteristics()){</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_160'/>
+160
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_160'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    String newCellRef = ScorecardPMMLUtils.getExtensionValue(characteristic.getExtensions(), &#34;cellRef&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_161'/>
+161
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_161'>1</a>
+<span>
+1. checkForMissingAttributes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    if ( characteristic.getAttributes().size() == 0 ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_162'/>
+162
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_162'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                        parseErrors.add(new ScorecardError(newCellRef, &#34;Missing Attribute Bins for Characteristic &#39;&#34;+characteristic.getName()+&#34;&#39;.&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_163'/>
+163
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_163'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_164'/>
+164
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_164'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_165'/>
+165
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_165'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_166'/>
+166
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_166'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_167'/>
+167
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_167'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_168'/>
+168
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_168'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_169'/>
+169
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_169'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private String createDataTypeCellRef(String cellRef, int n) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_170'/>
+170
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_170'>1</a>
+<span>
+1. createDataTypeCellRef : Replaced integer addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        int col = ((int)(cellRef.charAt(1)))+n;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_171'/>
+171
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_171'>1</a>
+<span>
+1. createDataTypeCellRef : mutated return of Object value for org/drools/scorecards/parser/xls/ExcelScorecardValidator::createDataTypeCellRef to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return &#34;$&#34;+((char)col)+cellRef.substring(cellRef.indexOf(&#39;$&#39;,1));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_172'/>
+172
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_172'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_173'/>
+173
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_173'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_174'/>
+174
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_174'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    protected static AggregationStrategy getScoringStrategy( Scorecard scorecard ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_175'/>
+175
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_175'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        String scoringStrategyName = ScorecardPMMLUtils.getExtensionValue(scorecard.getExtensionsAndCharacteristicsAndMiningSchemas(), ScorecardPMMLExtensionNames.SCORECARD_SCORING_STRATEGY);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_176'/>
+176
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_176'>1</a>
+<span>
+1. getScoringStrategy : mutated return of Object value for org/drools/scorecards/parser/xls/ExcelScorecardValidator::getScoringStrategy to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return PMML4Helper.resolveAggregationStrategy( scoringStrategyName );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_177'/>
+177
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_177'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6b0eb695_178'/>
+178
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_178'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_46'>46</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_46'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>runAdditionalValidations<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> removed call to org/drools/scorecards/parser/xls/ExcelScorecardValidator::checkForInvalidDataTypes &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_47'>47</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_47'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>runAdditionalValidations<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingAttributes(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> removed call to org/drools/scorecards/parser/xls/ExcelScorecardValidator::checkForMissingAttributes &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_48'>48</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_48'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>runAdditionalValidations<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_49'>49</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_49'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>runAdditionalValidations<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> removed call to org/drools/scorecards/parser/xls/ExcelScorecardValidator::validateReasonCodes &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_50'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>runAdditionalValidations<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> removed call to org/drools/scorecards/parser/xls/ExcelScorecardValidator::validateBaselineScores &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_52'>52</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_52'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>runAdditionalValidations<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_53'>53</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_53'/> 
+
+<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>runAdditionalValidations<br/><b>Killed by : </b>none</span></span> removed call to org/drools/scorecards/parser/xls/ExcelScorecardValidator::validateWeights &rarr; TIMED_OUT</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_59'>59</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_59'/> 
+
+<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateWeights<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; TIMED_OUT</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_60'>60</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_60'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateWeights<br/><b>Killed by : </b>org.drools.scorecards.ScoringStrategiesTest.testWeightedMaximum(org.drools.scorecards.ScoringStrategiesTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_62'>62</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_62'/> 
+
+<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateWeights<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; TIMED_OUT</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_63'>63</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_63'/> 
+
+<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateWeights<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; TIMED_OUT</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_66'>66</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_66'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateWeights<br/><b>Killed by : </b>org.drools.scorecards.ScoringStrategiesTest.testWeightedMaximum(org.drools.scorecards.ScoringStrategiesTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateWeights<br/><b>Killed by : </b>org.drools.scorecards.ScoringStrategiesTest.testWeightedMaximum(org.drools.scorecards.ScoringStrategiesTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_78'>78</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_78'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isDouble<br/><b>Killed by : </b>org.drools.scorecards.ScoringStrategiesTest.testWeightedMaximum(org.drools.scorecards.ScoringStrategiesTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_80'>80</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_80'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isDouble<br/><b>Killed by : </b>none</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_85'>85</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_85'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateReasonCodes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_86'>86</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_86'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateReasonCodes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_88'>88</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_88'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateReasonCodes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_90'>90</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_90'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateReasonCodes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateReasonCodes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingReasonCodes(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_91'>91</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_91'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateReasonCodes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_94'>94</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_94'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateReasonCodes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateReasonCodes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_105'>105</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_105'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateBaselineScores<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_107'>107</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_107'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateBaselineScores<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_109'>109</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_109'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateBaselineScores<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_111'>111</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_111'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateBaselineScores<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateBaselineScores<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>validateBaselineScores<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_112'>112</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_112'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateBaselineScores<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_122'>122</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_122'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_123'>123</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_123'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingAttributes(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_125'>125</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_125'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_128'>128</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_128'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_130'>130</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_130'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_134'>134</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_134'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_135'>135</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_135'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testWrongData(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_137'>137</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_137'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testWrongData(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_142'>142</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_142'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_143'>143</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_143'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingAttributes(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_145'>145</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_145'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForInvalidDataTypes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testErrorCount(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_156'>156</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_156'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForMissingAttributes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingAttributes(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_157'>157</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_157'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForMissingAttributes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingAttributes(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_159'>159</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_159'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForMissingAttributes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingAttributes(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_161'>161</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_161'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkForMissingAttributes<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_170'>170</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_170'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createDataTypeCellRef<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> Replaced integer addition with subtraction &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_171'>171</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_171'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createDataTypeCellRef<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> mutated return of Object value for org/drools/scorecards/parser/xls/ExcelScorecardValidator::createDataTypeCellRef to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6b0eb695_176'>176</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6b0eb695_176'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getScoringStrategy<br/><b>Killed by : </b>org.drools.scorecards.ScorecardParseErrorsTest.testMissingAttributes(org.drools.scorecards.ScorecardParseErrorsTest)</span></span> mutated return of Object value for org/drools/scorecards/parser/xls/ExcelScorecardValidator::getScoringStrategy to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.drools.scorecards.ScorecardParseErrorsTest.testWrongData(org.drools.scorecards.ScorecardParseErrorsTest) (10 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testWeightedMinimumInitialScore(org.drools.scorecards.ScoringStrategiesTest) (790 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testMaximumInitialScore(org.drools.scorecards.ScoringStrategiesTest) (781 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testCharacteristicsAndAttributes(org.drools.scorecards.PMMLDocumentTest) (11 ms)</li><li>org.drools.scorecards.ExternalObjectModelTest.testPMMLCustomOutput(org.drools.scorecards.ExternalObjectModelTest) (189 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testOutput(org.drools.scorecards.PMMLDocumentTest) (18 ms)</li><li>org.drools.scorecards.ScorecardParseErrorsTest.testErrorCount(org.drools.scorecards.ScorecardParseErrorsTest) (10 ms)</li><li>org.drools.scorecards.ExternalObjectModelTest.testWithInitialScore(org.drools.scorecards.ExternalObjectModelTest) (1275 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testWeightedMaximum(org.drools.scorecards.ScoringStrategiesTest) (781 ms)</li><li>org.drools.scorecards.ScorecardProviderTest.testDrlGenerationWithExternalTypes(org.drools.scorecards.ScorecardProviderTest) (26 ms)</li><li>org.drools.scorecards.ScorecardReasonCodeTest.testBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest) (28 ms)</li><li>org.drools.scorecards.DrlFromPMMLTest.testRuleCount(org.drools.scorecards.DrlFromPMMLTest) (166 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testResidenceStateScoreCharacteristic(org.drools.scorecards.PMMLDocumentTest) (16 ms)</li><li>org.drools.scorecards.ScorecardsKModuleTest.testScorecardFromKModule2(org.drools.scorecards.ScorecardsKModuleTest) (1137 ms)</li><li>org.drools.scorecards.ScorecardProviderTest.testKnowledgeBaseWithExection(org.drools.scorecards.ScorecardProviderTest) (908 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testScorecardWithExtensions(org.drools.scorecards.PMMLDocumentTest) (10 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testAggregateInitialScore(org.drools.scorecards.ScoringStrategiesTest) (978 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testDataDictionary(org.drools.scorecards.PMMLDocumentTest) (11 ms)</li><li>org.drools.scorecards.ExternalObjectModelTest.testDRLExecution(org.drools.scorecards.ExternalObjectModelTest) (1276 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testMiningSchema(org.drools.scorecards.PMMLDocumentTest) (10 ms)</li><li>org.drools.scorecards.ScorecardsKModuleTest.testScorecardFromKBase2(org.drools.scorecards.ScorecardsKModuleTest) (867 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testScoringExtension(org.drools.scorecards.ScoringStrategiesTest) (19 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testMaximum(org.drools.scorecards.ScoringStrategiesTest) (756 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testWeightedAverage(org.drools.scorecards.ScoringStrategiesTest) (733 ms)</li><li>org.drools.scorecards.ScorecardReasonCodeTest.testMissingReasonCodes(org.drools.scorecards.ScorecardReasonCodeTest) (12 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testMinimum(org.drools.scorecards.ScoringStrategiesTest) (887 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testPMMLDocument(org.drools.scorecards.PMMLDocumentTest) (154 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testAverageInitialScore(org.drools.scorecards.ScoringStrategiesTest) (828 ms)</li><li>org.drools.scorecards.ExternalObjectModelTest.testWithReasonCodes(org.drools.scorecards.ExternalObjectModelTest) (1306 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testWeightedAggregateInitialScore(org.drools.scorecards.ScoringStrategiesTest) (750 ms)</li><li>org.drools.scorecards.ScorecardReasonCodeTest.testPointsBelow(org.drools.scorecards.ScorecardReasonCodeTest) (906 ms)</li><li>org.drools.scorecards.ScorecardProviderTest.testDrlWithSheetName(org.drools.scorecards.ScorecardProviderTest) (35 ms)</li><li>org.drools.scorecards.ScorecardParseErrorsTest.testMissingDataType(org.drools.scorecards.ScorecardParseErrorsTest) (10 ms)</li><li>org.drools.scorecards.ScorecardReasonCodeTest.testReasonCodes(org.drools.scorecards.ScorecardReasonCodeTest) (10 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testMinimumInitialScore(org.drools.scorecards.ScoringStrategiesTest) (799 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testValidLicenseScoreCharacteristic(org.drools.scorecards.PMMLDocumentTest) (11 ms)</li><li>org.drools.scorecards.DrlFromPMMLTest.testDrlNoNull(org.drools.scorecards.DrlFromPMMLTest) (257 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testWeightedMaximumInitialScore(org.drools.scorecards.ScoringStrategiesTest) (970 ms)</li><li>org.drools.scorecards.DrlFromPMMLTest.testImports(org.drools.scorecards.DrlFromPMMLTest) (214 ms)</li><li>org.drools.scorecards.ScorecardReasonCodeTest.testPointsAbove(org.drools.scorecards.ScorecardReasonCodeTest) (1048 ms)</li><li>org.drools.scorecards.ScorecardReasonCodeTest.testUseReasonCodes(org.drools.scorecards.ScorecardReasonCodeTest) (12 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testWeightedMinimum(org.drools.scorecards.ScoringStrategiesTest) (1157 ms)</li><li>org.drools.scorecards.DrlFromPMMLTest.testDRLExecution(org.drools.scorecards.DrlFromPMMLTest) (8626 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testWeightedAggregate(org.drools.scorecards.ScoringStrategiesTest) (1042 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testOccupationScoreCharacteristic(org.drools.scorecards.PMMLDocumentTest) (13 ms)</li><li>org.drools.scorecards.ScorecardReasonCodeTest.testPMMLDocument(org.drools.scorecards.ScorecardReasonCodeTest) (132 ms)</li><li>org.drools.scorecards.ScorecardReasonCodeTest.testReasonCodesCombinations(org.drools.scorecards.ScorecardReasonCodeTest) (1053 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testAgeScoreCharacteristic(org.drools.scorecards.PMMLDocumentTest) (11 ms)</li><li>org.drools.scorecards.ScorecardReasonCodeTest.testAbsenceOfReasonCodes(org.drools.scorecards.ScorecardReasonCodeTest) (17 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testAverage(org.drools.scorecards.ScoringStrategiesTest) (780 ms)</li><li>org.drools.scorecards.ScorecardParseErrorsTest.testMissingAttributes(org.drools.scorecards.ScorecardParseErrorsTest) (10 ms)</li><li>org.drools.scorecards.PMMLDocumentTest.testHeader(org.drools.scorecards.PMMLDocumentTest) (11 ms)</li><li>org.drools.scorecards.DrlFromPMMLTest.testPackage(org.drools.scorecards.DrlFromPMMLTest) (169 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testWeightedAverageInitialScore(org.drools.scorecards.ScoringStrategiesTest) (737 ms)</li><li>org.drools.scorecards.ScoringStrategiesTest.testAggregate(org.drools.scorecards.ScoringStrategiesTest) (1138 ms)</li><li>org.drools.scorecards.ScorecardReasonCodeTest.testMissingBaselineScores(org.drools.scorecards.ScorecardReasonCodeTest) (15 ms)</li><li>org.drools.scorecards.ScorecardProviderTest.testDrlWithoutSheetName(org.drools.scorecards.ScorecardProviderTest) (27 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.12-SNAPSHOT
+
+</body>
+</html>

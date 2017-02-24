@@ -1,0 +1,982 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>PlexusComponentProvider.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2005 Red Hat, Inc. and/or its affiliates.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.kie.scanner.embedder;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.DefaultMaven;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.Maven;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.apache.maven.execution.MavenExecutionRequest;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.codehaus.plexus.PlexusContainer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.codehaus.plexus.component.repository.exception.ComponentLookupException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.eclipse.aether.RepositorySystemSession;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.File;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class PlexusComponentProvider implements ComponentProvider {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final PlexusContainer plexusContainer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_32'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    public PlexusComponentProvider(File mavenHome, MavenRequest mavenRequest) throws MavenEmbedderException {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_33'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        plexusContainer = MavenEmbedderUtils.buildPlexusContainer(mavenHome, mavenRequest);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_34'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_36'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public PlexusComponentProvider(ClassLoader mavenClassLoader, ClassLoader parent, MavenRequest mavenRequest) throws MavenEmbedderException {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_37'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        plexusContainer = MavenEmbedderUtils.buildPlexusContainer(mavenClassLoader, parent, mavenRequest);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_38'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public &#60;T&#62; T lookup( Class&#60;T&#62; clazz ) throws ComponentLookupException {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_42'/>
+42
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_42'>1</a>
+<span>
+1. lookup : mutated return of Object value for org/kie/scanner/embedder/PlexusComponentProvider::lookup to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return plexusContainer.lookup( clazz );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_45'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_46'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public RepositorySystemSession getRepositorySystemSession(MavenExecutionRequest mavenExecutionRequest) throws ComponentLookupException {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_47'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        DefaultMaven defaultMaven = (DefaultMaven) lookup( Maven.class );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_48'/>
+48
+</td>
+<td class='uncertain'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_48'>1</a>
+<span>
+1. getRepositorySystemSession : mutated return of Object value for org/kie/scanner/embedder/PlexusComponentProvider::getRepositorySystemSession to ( if (x != null) null else throw new RuntimeException ) &rarr; TIMED_OUT<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='uncertain'>        return defaultMaven.newRepositorySession( mavenExecutionRequest );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_50'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public PlexusContainer getPlexusContainer() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_53'/>
+53
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_53'>1</a>
+<span>
+1. getPlexusContainer : mutated return of Object value for org/kie/scanner/embedder/PlexusComponentProvider::getPlexusContainer to ( if (x != null) null else throw new RuntimeException ) &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return plexusContainer;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_55'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_56'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_57'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public ClassLoader getSystemClassLoader() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_58'/>
+58
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_58'>1</a>
+<span>
+1. getSystemClassLoader : mutated return of Object value for org/kie/scanner/embedder/PlexusComponentProvider::getSystemClassLoader to ( if (x != null) null else throw new RuntimeException ) &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return plexusContainer.getContainerRealm();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_60'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_42'>42</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_42'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lookup<br/><b>Killed by : </b>org.kie.scanner.embedder.MavenEmbedderTest.testCustomSettingSource(org.kie.scanner.embedder.MavenEmbedderTest)</span></span> mutated return of Object value for org/kie/scanner/embedder/PlexusComponentProvider::lookup to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_48'>48</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_48'/> 
+
+<p class='TIMED_OUT'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getRepositorySystemSession<br/><b>Killed by : </b>none</span></span> mutated return of Object value for org/kie/scanner/embedder/PlexusComponentProvider::getRepositorySystemSession to ( if (x != null) null else throw new RuntimeException ) &rarr; TIMED_OUT</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_53'>53</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_53'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPlexusContainer<br/><b>Killed by : </b>none</span></span> mutated return of Object value for org/kie/scanner/embedder/PlexusComponentProvider::getPlexusContainer to ( if (x != null) null else throw new RuntimeException ) &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3d41d7cb_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3d41d7cb_58'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getSystemClassLoader<br/><b>Killed by : </b>none</span></span> mutated return of Object value for org/kie/scanner/embedder/PlexusComponentProvider::getSystemClassLoader to ( if (x != null) null else throw new RuntimeException ) &rarr; SURVIVED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.kie.scanner.KieRepositoryScannerTest.testScanIncludedDependency[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1259 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testGetRuleNames(org.kie.scanner.KieModuleMetaDataTest) (47 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithRange[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1796 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithKJarContainingTypeDeclaration[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1223 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKieScannerScopesNotRequired[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (293 ms)</li><li>org.kie.scanner.KieModuleMavenTest.testResourceTypeInKieModuleReleaseId(org.kie.scanner.KieModuleMavenTest) (111 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKJarContainingClassLoadedFromClassLoaderDifferentKBase[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1277 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testExcludeTestDeps(org.kie.scanner.KieModuleMetaDataTest) (36 ms)</li><li>org.kie.api.builder.helper.KieModuleDeploymentHelperTest.testFluentDeploymentHelper(org.kie.api.builder.helper.KieModuleDeploymentHelperTest) (2200 ms)</li><li>org.kie.scanner.embedder.MavenEmbedderTest.testExternalRepositories(org.kie.scanner.embedder.MavenEmbedderTest) (38 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testGetPackageNames(org.kie.scanner.KieModuleMetaDataTest) (43 ms)</li><li>org.kie.scanner.KieModuleMavenTest.testKieModuleFromMavenNoDependencies(org.kie.scanner.KieModuleMavenTest) (165 ms)</li><li>org.kie.scanner.KieModuleMavenTest.testKieModuleFromMavenWithDependencies(org.kie.scanner.KieModuleMavenTest) (158 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testKieModuleMetaData(org.kie.scanner.KieModuleMetaDataTest) (200 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithGDRL[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1196 ms)</li><li>org.kie.scanner.embedder.MavenDeployTest.testDeploy(org.kie.scanner.embedder.MavenDeployTest) (771 ms)</li><li>org.kie.scanner.KieModuleMavenTest.testKieModulePojoDependencies(org.kie.scanner.KieModuleMavenTest) (170 ms)</li><li>org.kie.scanner.KieModuleMavenTest.testKieModuleFromMavenWithDependenciesProperties(org.kie.scanner.KieModuleMavenTest) (207 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testTypeAndRuleInDifferentKieModules[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (97 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartNotDeployed[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (107 ms)</li><li>org.kie.scanner.KieModuleIncrementalCompilationTest.testCheckMetaDataAfterIncrementalDelete(org.kie.scanner.KieModuleIncrementalCompilationTest) (130 ms)</li><li>org.kie.scanner.KieModuleMavenTest.testKieModuleFromMavenWithTransitiveDependencies(org.kie.scanner.KieModuleMavenTest) (254 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testKieModuleMetaDataInMemoryUsingPOMWithTypeDeclaration(org.kie.scanner.KieModuleMetaDataTest) (137 ms)</li><li>org.kie.scanner.embedder.MavenDeployTest.testKScannerWithDeployUsingDistributionManagement(org.kie.scanner.embedder.MavenDeployTest) (495 ms)</li><li>org.kie.scanner.embedder.MavenEmbedderTest.testCustomSettingSource(org.kie.scanner.embedder.MavenEmbedderTest) (28 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testScannerOnPomRuleProject[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1216 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testLoadKieJarFromMavenRepo[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (47 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testKieModuleMetaDataWithoutTestDependencies(org.kie.scanner.KieModuleMetaDataTest) (156 ms)</li><li>org.kie.scanner.KieModuleIncrementalCompilationTest.checkIncrementalCompilationWithFunctionThenRule(org.kie.scanner.KieModuleIncrementalCompilationTest) (93 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithKJarContainingClasses[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1205 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerStartScanNow[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1258 ms)</li><li>org.kie.scanner.KieModuleBuilderTest.testKieModuleUsingPOMMissingKBaseDefinition(org.kie.scanner.KieModuleBuilderTest) (147 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testKieModuleMetaDataInMemoryWithTypeDeclaration(org.kie.scanner.KieModuleMetaDataTest) (118 ms)</li><li>org.kie.scanner.management.KieScannerMBeanTest.testKScannerMBean(org.kie.scanner.management.KieScannerMBeanTest) (1453 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKJarContainingClassLoadedFromClassLoaderSameKBase[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1273 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testScannerOnPomProject[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1243 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testScannerOnPomProjectWithFixedVersion[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (2264 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testKieModuleMetaDataInMemoryWithJavaClassDefaultPackage(org.kie.scanner.KieModuleMetaDataTest) (39 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithFunction[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1228 ms)</li><li>org.kie.scanner.KieScannerIncrementalCompilationTest.testChangeDrlNotUsingJava(org.kie.scanner.KieScannerIncrementalCompilationTest) (1176 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testScannerOnPomProjectSameKieSession[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (2296 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testKieModuleMetaDataInMemoryWithJavaClass(org.kie.scanner.KieModuleMetaDataTest) (95 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testKieModuleMetaDataForDependenciesInMemory(org.kie.scanner.KieModuleMetaDataTest) (101 ms)</li><li>org.kie.scanner.KieModuleIncrementalCompilationTest.checkIncrementalCompilationWithRuleFunctionRule(org.kie.scanner.KieModuleIncrementalCompilationTest) (79 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScanner[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1326 ms)</li><li>org.kie.scanner.KieModuleIncrementalCompilationTest.checkIncrementalCompilationWithRuleThenFunction(org.kie.scanner.KieModuleIncrementalCompilationTest) (110 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testIncludeAllDeps(org.kie.scanner.KieModuleMetaDataTest) (36 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testMissingDependency[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1869 ms)</li><li>org.kie.api.builder.helper.KieModuleDeploymentHelperTest.testSingleDeploymentHelper(org.kie.api.builder.helper.KieModuleDeploymentHelperTest) (167 ms)</li><li>org.kie.scanner.KieModuleMetaDataTest.testKieMavenPluginEmptyProject(org.kie.scanner.KieModuleMetaDataTest) (86 ms)</li><li>org.kie.scanner.DependentScopeNamedBeanTest.testPlexusBeanScanning(org.kie.scanner.DependentScopeNamedBeanTest) (70 ms)</li><li>org.kie.scanner.KieRepositoryScannerTest.testKScannerWithNewFunction[Manually wired component provider=false](org.kie.scanner.KieRepositoryScannerTest) (1224 ms)</li><li>org.kie.scanner.KieScannerIncrementalCompilationTest.testChangeJavaClassButNotDrl(org.kie.scanner.KieScannerIncrementalCompilationTest) (1169 ms)</li><li>org.kie.scanner.KieModuleIncrementalCompilationTest.testIncrementalCompilationFirstBuildHasErrors(org.kie.scanner.KieModuleIncrementalCompilationTest) (186 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.12-SNAPSHOT
+
+</body>
+</html>

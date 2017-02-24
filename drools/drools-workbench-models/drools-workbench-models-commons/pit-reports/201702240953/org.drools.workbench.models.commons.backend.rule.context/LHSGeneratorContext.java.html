@@ -1,0 +1,2060 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>LHSGeneratorContext.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2013 Red Hat, Inc. and/or its affiliates.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * you may not use this file except in compliance with the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * You may obtain a copy of the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *       http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See the License for the specific language governing permissions and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * limitations under the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.drools.workbench.models.commons.backend.rule.context;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.HashSet;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Set;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.datamodel.rule.FieldConstraint;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.datamodel.rule.IPattern;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.datamodel.rule.InterpolationVariable;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * LHS DRL generation context object</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class LHSGeneratorContext {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_30'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private Set&#60;String&#62; varsInScope = new HashSet&#60;String&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private FieldConstraint fieldConstraint;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private IPattern pattern;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private LHSGeneratorContext parent;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_34'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private int depth;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private int offset;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private boolean hasOutput;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private boolean hasNonTemplateOutput;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_38'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_39'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    LHSGeneratorContext() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_40'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    LHSGeneratorContext( final LHSGeneratorContext parent,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                         final IPattern pattern,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                         final int depth,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_45'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                         final int offset ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_46'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.parent = parent;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_47'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.depth = depth;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_48'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.offset = offset;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_49'/>
+49
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_49'>1</a>
+<span>
+1. <init> : removed call to org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::setPattern &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        setPattern( pattern );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_50'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void setPattern( final IPattern pattern ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_53'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.pattern = pattern;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_54'/>
+54
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_54'>1</a>
+<span>
+1. setPattern : removed call to java/util/Set::clear &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        this.varsInScope.clear();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_55'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        final Set&#60;InterpolationVariable&#62; vars = new HashSet&#60;InterpolationVariable&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_56'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        final GeneratorContextRuleModelVisitor visitor = new GeneratorContextRuleModelVisitor( vars );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_57'/>
+57
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_57'>1</a>
+<span>
+1. setPattern : removed call to org/drools/workbench/models/commons/backend/rule/context/GeneratorContextRuleModelVisitor::visit &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        visitor.visit( pattern );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_58'/>
+58
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_58'>1</a>
+<span>
+1. setPattern : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for ( InterpolationVariable var : vars ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_59'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            varsInScope.add( var.getVarName() );</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_60'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_61'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        hasNonTemplateOutput = visitor.hasNonTemplateOutput();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_62'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    LHSGeneratorContext( final LHSGeneratorContext parent,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_65'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                         final FieldConstraint fieldConstraint,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_66'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                         final int depth,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_67'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                         final int offset ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_68'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.parent = parent;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_69'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.depth = depth;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_70'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.offset = offset;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_71'/>
+71
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_71'>1</a>
+<span>
+1. <init> : removed call to org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::setFieldConstraint &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        setFieldConstraint( fieldConstraint );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_72'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_74'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void setFieldConstraint( final FieldConstraint fieldConstraint ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_75'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.fieldConstraint = fieldConstraint;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_76'/>
+76
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_76'>1</a>
+<span>
+1. setFieldConstraint : removed call to java/util/Set::clear &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        this.varsInScope.clear();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_77'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        final Set&#60;InterpolationVariable&#62; vars = new HashSet&#60;InterpolationVariable&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_78'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        final GeneratorContextRuleModelVisitor visitor = new GeneratorContextRuleModelVisitor( vars );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_79'/>
+79
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_79'>1</a>
+<span>
+1. setFieldConstraint : removed call to org/drools/workbench/models/commons/backend/rule/context/GeneratorContextRuleModelVisitor::visit &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        visitor.visit( fieldConstraint );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_80'/>
+80
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_80'>1</a>
+<span>
+1. setFieldConstraint : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for ( InterpolationVariable var : vars ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_81'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            varsInScope.add( var.getVarName() );</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_82'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_83'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        hasNonTemplateOutput = visitor.hasNonTemplateOutput();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_84'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_85'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_86'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public IPattern getPattern() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_87'/>
+87
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_87'>1</a>
+<span>
+1. getPattern : mutated return of Object value for org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::getPattern to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        return pattern;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_88'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_89'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_90'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public FieldConstraint getFieldConstraint() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_91'/>
+91
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_91'>1</a>
+<span>
+1. getFieldConstraint : mutated return of Object value for org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::getFieldConstraint to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return fieldConstraint;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_92'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_93'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_94'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public LHSGeneratorContext getParent() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_95'/>
+95
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_95'>1</a>
+<span>
+1. getParent : mutated return of Object value for org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::getParent to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return parent;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_96'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_97'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_98'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int getDepth() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_99'/>
+99
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_99'>1</a>
+<span>
+1. getDepth : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return depth;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_100'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_101'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_102'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int getOffset() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_103'/>
+103
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_103'>1</a>
+<span>
+1. getOffset : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; SURVIVED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return offset;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_104'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_105'/>
+105
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_105'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_106'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public boolean isHasOutput() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_107'/>
+107
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_107'>1</a>
+<span>
+1. isHasOutput : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return hasOutput;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_108'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_109'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_110'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void setHasOutput( boolean hasOutput ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_111'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.hasOutput = hasOutput;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_112'/>
+112
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_112'>1</a>
+<span>
+1. setHasOutput : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if ( parent != null ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_113'/>
+113
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_113'>1</a>
+<span>
+1. setHasOutput : removed call to org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::setHasOutput &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            parent.setHasOutput( hasOutput );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_114'/>
+114
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_114'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_115'/>
+115
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_115'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_116'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_117'/>
+117
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_117'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Set&#60;String&#62; getVarsInScope() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_118'/>
+118
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_118'>1</a>
+<span>
+1. getVarsInScope : mutated return of Object value for org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::getVarsInScope to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        return this.varsInScope;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_119'/>
+119
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_119'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_120'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_121'/>
+121
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_121'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public boolean hasNonTemplateOutput() {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_122'/>
+122
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_122'>1</a>
+<span>
+1. hasNonTemplateOutput : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        return hasNonTemplateOutput;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_123'/>
+123
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_123'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_124'/>
+124
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_124'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@1b06772d_125'/>
+125
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_125'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_49'>49</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_49'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>none</span></span> removed call to org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::setPattern &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_54'>54</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_54'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setPattern<br/><b>Killed by : </b>none</span></span> removed call to java/util/Set::clear &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_57'>57</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_57'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setPattern<br/><b>Killed by : </b>none</span></span> removed call to org/drools/workbench/models/commons/backend/rule/context/GeneratorContextRuleModelVisitor::visit &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_58'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setPattern<br/><b>Killed by : </b>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_SingleFieldConstraintCEPOperatorTimeWindow(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_71'>71</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_71'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_CompositeFactPatternWithOrAndCompositeFieldConstraint(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest)</span></span> removed call to org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::setFieldConstraint &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_76'>76</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_76'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setFieldConstraint<br/><b>Killed by : </b>none</span></span> removed call to java/util/Set::clear &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_79'>79</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_79'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setFieldConstraint<br/><b>Killed by : </b>none</span></span> removed call to org/drools/workbench/models/commons/backend/rule/context/GeneratorContextRuleModelVisitor::visit &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_80'>80</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_80'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setFieldConstraint<br/><b>Killed by : </b>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testPredicateConstraint(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_87'>87</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_87'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPattern<br/><b>Killed by : </b>none</span></span> mutated return of Object value for org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::getPattern to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_91'>91</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_91'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getFieldConstraint<br/><b>Killed by : </b>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSFormula(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest)</span></span> mutated return of Object value for org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::getFieldConstraint to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_95'>95</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_95'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getParent<br/><b>Killed by : </b>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_NestedFieldConstraintsOnlyLeafOperator(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest)</span></span> mutated return of Object value for org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::getParent to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_99'>99</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_99'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getDepth<br/><b>Killed by : </b>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testOrComposite(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_103'>103</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_103'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getOffset<br/><b>Killed by : </b>none</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; SURVIVED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_107'>107</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_107'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isHasOutput<br/><b>Killed by : </b>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testSubConstraints(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_112'>112</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_112'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setHasOutput<br/><b>Killed by : </b>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCompositeOrConstraintsComplex(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_113'>113</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_113'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setHasOutput<br/><b>Killed by : </b>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCompositeOrConstraintsComplex(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest)</span></span> removed call to org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::setHasOutput &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_118'>118</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_118'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getVarsInScope<br/><b>Killed by : </b>none</span></span> mutated return of Object value for org/drools/workbench/models/commons/backend/rule/context/LHSGeneratorContext::getVarsInScope to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@1b06772d_122'>122</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@1b06772d_122'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasNonTemplateOutput<br/><b>Killed by : </b>none</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testInOperatorString(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_SingleFieldConstraintCEPOperatorTimeLength(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testLHSMultipleAllOfTheFollowing(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (4 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testConnective(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCallFunction(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testRHSAppendToList(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testStringReplaceExpression(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testEnumerationNestedClasses(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.textIsNotNullOperator(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testPredicateConstraint(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCompositeAndConstraintsComplex(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testFunctionsWithVariableParameters(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testBoundListConstraint(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (4 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCompositeFactPatternWithFrom(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (8 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testMethodCallCheckParameterDataTypes1(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testStringFieldsWithDoubleForwardSlashes(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testNewKeywordVariableNamePrefix1(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (4 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testRHSFreeFormDRL(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (4 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLiteralBigIntegerJava(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testIncompleteFieldConstraintStringWithNonNull(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testLHSMissingConstraints(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (7 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSSetFieldWithVariable(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testEnumTypeComparable(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (11 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testSingleFieldConstraintConnectives2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLiteralBigIntegerMvel(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testReturnValueConstraint(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_NestedFieldConstraints(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (8 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLiteralStrings(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (0 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testInvalidFromSyntax(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testFromAccumulateWithEmbeddedFromEntryPoint(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testBasics(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testNotInOperatorNumber(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionDate(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSChangeMultipleFieldsModifyOneUpdateOther(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testEnumeration(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSSetMethodCallsMethodMVEL(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (0 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionNestedString(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testAddGlobal(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (27 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionNestedBoolean(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testRHSFormulaTruncation(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testBasics2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testRHSFormulaTruncationInsertFact(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (7 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testBigDecimal1(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testFunctionCalls4_MultiParameterSetter(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testMultipleFromKeywords(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testFunctionCalls3(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (4 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLiteralDates(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (0 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testNotMultiPatterns(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testInOperatorNumber(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testMoreComplexRenderingWithDsl(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (4 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testMoreComplexRendering2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionString1(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionNestedNumber(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (0 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLiteralBigDecimalMvel(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSExecuteWorkItemWithMissingBindings2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testMethodCallCheckParameterDataTypes2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testSumAsGivenValue(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCompositeAndConstraints(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testFunctionCalls(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testNewKeywordVariableNamePrefix3(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testLHSFormula(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (4 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testLHSFromCollectWithListDeclared(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testLHSNestedMethodOneParameter(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (5 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCompositeConstraintsRoundTrip(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (55 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_SingleFieldConstraintCEPOperatorTimeWindow(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLiteralNumerics(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testRHSChainedMethodCalls4(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testLHSValidLiteralFieldName(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testEnumTypeDate(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCompositeOrConstraintsComplex(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_CompositeFactPatternWithOrAndCompositeFieldConstraint(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testValidSyntaxNonImportedType(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testSubConstraints(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSExecuteWorkItem2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testFromCollectWithEmbeddedFromEntryPoint(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testRuleModelPersistenceHelperUnwrapParenthesis(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testFunctionCalls2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionJavaEnum(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_CompositeFactPatternWithOr(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testEnumTypeNumeric(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (6 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testSingleExists(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSDateModifyAction(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testEnumTypeStringInOperator(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testAddToGlobalCollection(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testListSize(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testBigDecimal2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testMethodCallWithTwoParametersIntegerAndString(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (5 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testExistsMultiPatterns(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSChangeMultipleFieldsModifyBoth(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.textIsNullOperator(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testLHSFromCollectWithoutListDeclared(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLiteralBigDecimalJava(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSSetMethodCallsMethodJava(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSExecuteWorkItem1(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testEnumTypeBoolean(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testRHSChainedMethodCalls2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCompositeOrConstraints(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (8 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionString2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testFullyQualifiedClassNameEnumeration(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testMethodCallCheckParameterDataTypes3(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSDateInsertAction(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testLHSCustomAccumulateFunctions(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSActionWorkItemSetFields(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testBigDecimal3(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testFieldsDeclaredButNoConstraints(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testEnumTypeString(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSExecuteWorkItemWithBindings(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testFieldBindingWithNoConstraints(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_SingleFieldConstraintCEPOperator2Parameters(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionNestedJavaEnum(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionNestedDate(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionNumber(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testMoreComplexRendering(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCompositeConstraints(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (15 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testIncompleteFieldConstraintStringWithNull(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testRHSEntryPointInsertion(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (8 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testNotInOperatorString(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testIncompleteFieldConstraintNonStringWithNull(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLiteralBooleans(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testRHSChainedMethodCalls1(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testNotNull(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testSingleFieldConstraintConnectives1(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testMethodCall(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSChangeMultipleFieldsBlockModify(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testFunctionCall(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testOrComposite(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testIncompleteFieldConstraintNonStringWithNonNull(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testNewKeywordVariableNamePrefix2(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRoundTrip(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSDateUpdateAction(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testFullyQualifiedClassNameEnumerationNestedClasses(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (4 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSFormula(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_NestedFieldConstraintsOnlyLeafOperator(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testRHSChainedMethodCalls3(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLiteralNoType(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (0 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testLHSNestedMethodTwoParameters(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (4 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testEnumNoType(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testInsertLogical(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testCompositeFactPatternWithFromWithDSL(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSReturnType(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testRHSExecuteWorkItemWithMissingBindings1(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest.testLHSExpressionBoolean(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest.testReciprocal_SingleFieldConstraintCEPOperator1Parameter(org.drools.workbench.models.commons.backend.rule.RuleModelDRLPersistenceUnmarshallingTest) (4 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.12-SNAPSHOT
+
+</body>
+</html>

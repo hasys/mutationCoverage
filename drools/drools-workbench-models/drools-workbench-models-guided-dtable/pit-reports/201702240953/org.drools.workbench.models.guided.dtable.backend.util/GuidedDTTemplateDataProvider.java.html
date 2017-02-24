@@ -1,0 +1,1360 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>GuidedDTTemplateDataProvider.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2012 Red Hat, Inc. and/or its affiliates.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;); you may not</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * use this file except in compliance with the License. You may obtain a copy of</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS, WITHOUT</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * License for the specific language governing permissions and limitations under</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.drools.workbench.models.guided.dtable.backend.util;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.guided.dtable.shared.model.BRLActionVariableColumn;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.guided.dtable.shared.model.BRLConditionVariableColumn;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.guided.dtable.shared.model.BaseColumn;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.guided.dtable.shared.model.DTCellValue52;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.HashMap;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Map;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * A Template value provider backed by a Decision Table</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class GuidedDTTemplateDataProvider</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    implements</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    TemplateDataProvider {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_34'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private Map&#60;String, DTCellValue52&#62; templateKeysToValueMap = new HashMap&#60;String, DTCellValue52&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public GuidedDTTemplateDataProvider(List&#60;BaseColumn&#62; columns,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_37'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                        List&#60;DTCellValue52&#62; rowData) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_38'/>
+38
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_38'>1</a>
+<span>
+1. <init> : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if ( columns == null ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_39'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            throw new NullPointerException( &#34;columns cannot be null&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_41'/>
+41
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_41'>1</a>
+<span>
+1. <init> : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if ( rowData == null ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_42'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            throw new NullPointerException( &#34;rowData cannot be null&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_45'/>
+45
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_45'>1</a>
+<span>
+1. <init> : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if ( rowData.size() != columns.size() ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_46'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>            throw new IllegalArgumentException( &#34;rowData contains a different number of columns to those provided&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_47'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_48'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        //Extract keys and values in constructor rather than on demand for speed</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_50'/>
+50
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_50'>3</a>
+<span>
+1. <init> : changed conditional boundary &rarr; KILLED<br/>
+2. <init> : Changed increment from 1 to -1 &rarr; KILLED<br/>
+3. <init> : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for ( int index = 0; index &#60; columns.size(); index++ ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_51'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            BaseColumn column = columns.get( index );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_52'/>
+52
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_52'>1</a>
+<span>
+1. <init> : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if ( column instanceof BRLConditionVariableColumn ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_53'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                BRLConditionVariableColumn brlCondition = (BRLConditionVariableColumn) column;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_54'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                templateKeysToValueMap.put( brlCondition.getVarName(),</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_55'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                            rowData.get( index ) );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_56'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_57'/>
+57
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_57'>1</a>
+<span>
+1. <init> : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            } else if ( column instanceof BRLActionVariableColumn ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_58'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                BRLActionVariableColumn brlAction = (BRLActionVariableColumn) column;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_59'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                templateKeysToValueMap.put( brlAction.getVarName(),</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_60'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                                            rowData.get( index ) );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_61'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_62'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_64'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_65'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_66'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public String getTemplateKeyValue(String key) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_67'/>
+67
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_67'>1</a>
+<span>
+1. getTemplateKeyValue : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if ( templateKeysToValueMap.containsKey( key ) ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_68'/>
+68
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_68'>1</a>
+<span>
+1. getTemplateKeyValue : mutated return of Object value for org/drools/workbench/models/guided/dtable/backend/util/GuidedDTTemplateDataProvider::getTemplateKeyValue to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return getStringValue( templateKeysToValueMap.get( key ) );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_69'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_70'/>
+70
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_70'>1</a>
+<span>
+1. getTemplateKeyValue : mutated return of Object value for org/drools/workbench/models/guided/dtable/backend/util/GuidedDTTemplateDataProvider::getTemplateKeyValue to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>        return &#34;&#34;;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_72'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private String getStringValue(DTCellValue52 cell) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_74'/>
+74
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_74'>1</a>
+<span>
+1. getStringValue : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if ( !cell.hasValue() ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_75'/>
+75
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_75'>1</a>
+<span>
+1. getStringValue : mutated return of Object value for org/drools/workbench/models/guided/dtable/backend/util/GuidedDTTemplateDataProvider::getStringValue to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return &#34;&#34;;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_76'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_77'/>
+77
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_77'>1</a>
+<span>
+1. getStringValue : mutated return of Object value for org/drools/workbench/models/guided/dtable/backend/util/GuidedDTTemplateDataProvider::getStringValue to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return GuidedDTDRLUtilities.convertDTCellValueToString( cell );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_78'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_79'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ea82928_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_80'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_38'>38</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_38'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSExecuteWorkItem(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_41'>41</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_41'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSExecuteWorkItem(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_45'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSExecuteWorkItem(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_50'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSExecuteWorkItem(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b><init><br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSExecuteWorkItem(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> Changed increment from 1 to -1 &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b><init><br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToRuleModel(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_52'>52</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_52'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSExecuteWorkItem(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_57'>57</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_57'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSExecuteWorkItem(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_67'>67</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_67'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getTemplateKeyValue<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToRuleModel(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_68'>68</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_68'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getTemplateKeyValue<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testLHSNonEmptyStringValuesFreeFormLine(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest)</span></span> mutated return of Object value for org/drools/workbench/models/guided/dtable/backend/util/GuidedDTTemplateDataProvider::getTemplateKeyValue to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_70'>70</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_70'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getTemplateKeyValue<br/><b>Killed by : </b>none</span></span> mutated return of Object value for org/drools/workbench/models/guided/dtable/backend/util/GuidedDTTemplateDataProvider::getTemplateKeyValue to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_74'>74</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_74'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getStringValue<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToRuleModel(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_75'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getStringValue<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testLHSNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest)</span></span> mutated return of Object value for org/drools/workbench/models/guided/dtable/backend/util/GuidedDTTemplateDataProvider::getStringValue to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ea82928_77'>77</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ea82928_77'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getStringValue<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testLHSNonEmptyStringValuesFreeFormLine(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest)</span></span> mutated return of Object value for org/drools/workbench/models/guided/dtable/backend/util/GuidedDTTemplateDataProvider::getStringValue to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSWithBRLColumn_ParseToDRL_FreeFormLine(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHS(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSInOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSIsNullOperatorWithNullValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSActionWorkItemSetFields1(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testNoConstraints(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testLHSNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSOtherwisePatternNumeric(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testRHSNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSNotInOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSOtherwisePatternBoolean(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (22 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testUpdateModifyMultipleFieldsWithMultipleSkipped4(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSIsNotNullOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSWithBRLColumn_ParseToDRL(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testInOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSDelimitedNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (4 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToRuleModel(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryMetadata(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSNotPattern(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSIsNullOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (4 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHS(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testUpdateModifyMultipleFieldsWithMultipleSkipped1(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSActionWorkItemInsertFacts2(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSOtherwisePatternString(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testDefaultValue(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSIsNullOperatorWithNullValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSIsNotNullOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testLHSNonEmptyStringValuesFreeFormLine(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSOtherwisePatternDate(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSIsNotNullOperatorWithNullValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.multipleConstraintLHSNotPatternInclusion(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSWithBRLColumn_ParseToRuleModel(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToDRL_MultipleActions(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testPackageNameAndImports(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (5 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest.allRulesHaveTheSameActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSWithBRLColumn_ParseToDRL_NoVariables(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSActionWorkItemInsertFacts1(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (4 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testUpdateModifyMultipleFieldsWithMultipleSkipped3(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryAttributes(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSExecuteWorkItemWithBindings(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testLHSDelimitedNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (141 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryActionSet(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (12 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToDRL_FreeFormLine(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (8 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSWithBRLColumn_ParseToDRL_MultiplePatterns(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.test2Rules(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (12 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSIsNullOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testRHSDelimitedNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (10 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSNotInOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSBindings(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testUpdateModifyMultipleFields(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryActionInsert(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (10 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSIsNotNullOperatorWithNullValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSInOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToDRL(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testInterpolate(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryConditionsConstraints1(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSExecuteWorkItem(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testNoOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToDRL_NoVariables(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testUpdateModifySingleField(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceFirstHitPolicyTest.allRulesHaveTheSameActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceFirstHitPolicyTest) (5 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.multipleLHSNotPatternInclusion(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (4 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryConditionsNoConstraints(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSDelimitedNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryConditionsConstraints2(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testUpdateModifyMultipleFieldsWithMultipleSkipped2(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testInWithSimpleSingleLiteralValue(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testUpdateModifyMultipleFields(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (4 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testUpdateModifyMultipleFieldsUpdateOneModifyTheOther(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSActionWorkItemSetFields2(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (1 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.12-SNAPSHOT
+
+</body>
+</html>

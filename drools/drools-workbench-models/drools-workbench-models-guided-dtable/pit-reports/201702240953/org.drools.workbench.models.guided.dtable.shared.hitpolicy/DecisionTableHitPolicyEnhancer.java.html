@@ -1,0 +1,1296 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>DecisionTableHitPolicyEnhancer.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright 2016 Red Hat, Inc. and/or its affiliates.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Licensed under the Apache License, Version 2.0 (the &#34;License&#34;); you may not</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * use this file except in compliance with the License. You may obtain a copy of</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * the License at</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * http://www.apache.org/licenses/LICENSE-2.0</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Unless required by applicable law or agreed to in writing, software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS, WITHOUT</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * License for the specific language governing permissions and limitations under</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * the License.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package org.drools.workbench.models.guided.dtable.shared.hitpolicy;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.guided.dtable.shared.model.AttributeCol52;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.guided.dtable.shared.model.DTCellValue52;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.guided.dtable.shared.model.GuidedDecisionTable52;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.drools.workbench.models.guided.dtable.shared.validation.DecisionTableValidator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Validates and extends the model based on selected HitPolicy</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @see org.drools.workbench.models.guided.dtable.shared.model.GuidedDecisionTable52.HitPolicy</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class DecisionTableHitPolicyEnhancer {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final GuidedDecisionTable52 dtable;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_33'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private DecisionTableHitPolicyEnhancer( final GuidedDecisionTable52 originalDTable ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_34'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.dtable = originalDTable;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_35'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static GuidedDecisionTable52 enhance( final GuidedDecisionTable52 originalDTable ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_38'/>
+38
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_38'>1</a>
+<span>
+1. enhance : mutated return of Object value for org/drools/workbench/models/guided/dtable/shared/hitpolicy/DecisionTableHitPolicyEnhancer::enhance to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return new DecisionTableHitPolicyEnhancer( originalDTable ).enhance();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private GuidedDecisionTable52 enhance() {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_43'/>
+43
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_43'>1</a>
+<span>
+1. enhance : removed call to org/drools/workbench/models/guided/dtable/shared/validation/DecisionTableValidator::validate &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        new DecisionTableValidator( dtable ).validate();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_45'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        switch ( dtable.getHitPolicy() ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_46'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_47'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            case UNIQUE_HIT:</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_48'/>
+48
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_48'>1</a>
+<span>
+1. enhance : removed call to org/drools/workbench/models/guided/dtable/shared/hitpolicy/DecisionTableHitPolicyEnhancer::addActivationGroup &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                addActivationGroup( &#34;unique-hit-policy-group&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_49'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                break;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_50'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            case FIRST_HIT:</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_51'/>
+51
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_51'>1</a>
+<span>
+1. enhance : removed call to org/drools/workbench/models/guided/dtable/shared/hitpolicy/DecisionTableHitPolicyEnhancer::addActivationGroup &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                addActivationGroup( &#34;first-hit-policy-group&#34; );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_52'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                break;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_53'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            case RULE_ORDER:</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            case NONE:</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_55'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            default:</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_56'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                // We do nothing.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_57'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                break;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_58'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_60'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_61'/>
+61
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_61'>1</a>
+<span>
+1. enhance : mutated return of Object value for org/drools/workbench/models/guided/dtable/shared/hitpolicy/DecisionTableHitPolicyEnhancer::enhance to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return dtable;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_62'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void addActivationGroup( final String activationGroupType ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_65'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        // Add Column</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_66'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        final AttributeCol52 attributeCol52 = new AttributeCol52();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_67'/>
+67
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_67'>1</a>
+<span>
+1. addActivationGroup : removed call to org/drools/workbench/models/guided/dtable/shared/model/AttributeCol52::setAttribute &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        attributeCol52.setAttribute( GuidedDecisionTable52.ACTIVATION_GROUP_ATTR );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_68'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        dtable.getAttributeCols()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_69'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .add( attributeCol52 );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_70'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_71'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        final int columnIndex = dtable.getExpandedColumns()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_72'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .indexOf( attributeCol52 );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_74'/>
+74
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_74'>1</a>
+<span>
+1. addActivationGroup : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for ( final List&#60;DTCellValue52&#62; row : dtable.getData() ) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_75'/>
+75
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_75'>1</a>
+<span>
+1. addActivationGroup : removed call to java/util/List::add &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            row.add( columnIndex,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_76'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                     new DTCellValue52( activationGroupType + &#34; &#34; + dtable.getTableName() ) );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_77'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_78'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422bc869_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_79'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422bc869_38'>38</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_38'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>enhance<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryAttributes(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> mutated return of Object value for org/drools/workbench/models/guided/dtable/shared/hitpolicy/DecisionTableHitPolicyEnhancer::enhance to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422bc869_43'>43</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_43'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>enhance<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceRuleOrderHitPolicyTest.blockUseOfSalience(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceRuleOrderHitPolicyTest)</span></span> removed call to org/drools/workbench/models/guided/dtable/shared/validation/DecisionTableValidator::validate &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422bc869_48'>48</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_48'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>enhance<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest.allRulesHaveTheSameActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest)</span></span> removed call to org/drools/workbench/models/guided/dtable/shared/hitpolicy/DecisionTableHitPolicyEnhancer::addActivationGroup &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422bc869_51'>51</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_51'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>enhance<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceFirstHitPolicyTest.allRulesHaveTheSameActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceFirstHitPolicyTest)</span></span> removed call to org/drools/workbench/models/guided/dtable/shared/hitpolicy/DecisionTableHitPolicyEnhancer::addActivationGroup &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422bc869_61'>61</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_61'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>enhance<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryAttributes(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest)</span></span> mutated return of Object value for org/drools/workbench/models/guided/dtable/shared/hitpolicy/DecisionTableHitPolicyEnhancer::enhance to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422bc869_67'>67</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_67'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>addActivationGroup<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest.allRulesHaveTheSameActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest)</span></span> removed call to org/drools/workbench/models/guided/dtable/shared/model/AttributeCol52::setAttribute &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422bc869_74'>74</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_74'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>addActivationGroup<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest.allRulesHaveTheSameActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422bc869_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422bc869_75'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>addActivationGroup<br/><b>Killed by : </b>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest.allRulesHaveTheSameActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest)</span></span> removed call to java/util/List::add &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSWithBRLColumn_ParseToDRL_FreeFormLine(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceFirstHitPolicyTest.blockUseOfActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceFirstHitPolicyTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSInOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSIsNullOperatorWithNullValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testNoConstraints(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testLHSNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testRHSNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSNotInOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testUpdateModifyMultipleFieldsWithMultipleSkipped4(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSIsNotNullOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSWithBRLColumn_ParseToDRL(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testInOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSDelimitedNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (4 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryMetadata(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSIsNullOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (4 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testUpdateModifyMultipleFieldsWithMultipleSkipped1(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testDefaultValue(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSIsNullOperatorWithNullValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSIsNotNullOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testLHSNonEmptyStringValuesFreeFormLine(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSIsNotNullOperatorWithNullValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToDRL_MultipleActions(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testPackageNameAndImports(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (5 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceRuleOrderHitPolicyTest.blockUseOfSalience(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceRuleOrderHitPolicyTest) (0 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest.allRulesHaveTheSameActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSWithBRLColumn_ParseToDRL_NoVariables(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceFirstHitPolicyTest.blockUseOfSalience(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceFirstHitPolicyTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest.blockUseOfActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceUniqueHitPolicyTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testUpdateModifyMultipleFieldsWithMultipleSkipped3(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryAttributes(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testLHSDelimitedNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (141 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryActionSet(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (12 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToDRL_FreeFormLine(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (8 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSWithBRLColumn_ParseToDRL_MultiplePatterns(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.test2Rules(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (12 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSIsNullOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testRHSDelimitedNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (10 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSNotInOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testUpdateModifyMultipleFields(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryActionInsert(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (10 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryLHSIsNotNullOperatorWithNullValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLHSInOperator(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToDRL(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testInterpolate(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryConditionsConstraints1(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSWithBRLColumn_ParseToDRL_NoVariables(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (1 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testUpdateModifySingleField(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceFirstHitPolicyTest.allRulesHaveTheSameActivationGroup(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceFirstHitPolicyTest) (5 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.multipleLHSNotPatternInclusion(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (4 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryConditionsNoConstraints(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testRHSDelimitedNonEmptyStringValues(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testLimitedEntryConditionsConstraints2(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest.testUpdateModifyMultipleFieldsWithMultipleSkipped2(org.drools.workbench.models.guided.dtable.backend.BRLRuleModelTest) (2 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testInWithSimpleSingleLiteralValue(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testUpdateModifyMultipleFields(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (4 ms)</li><li>org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest.testUpdateModifyMultipleFieldsUpdateOneModifyTheOther(org.drools.workbench.models.guided.dtable.backend.GuidedDTDRLPersistenceTest) (3 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.12-SNAPSHOT
+
+</body>
+</html>
